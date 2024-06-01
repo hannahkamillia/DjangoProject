@@ -10,6 +10,9 @@ from sklearn.metrics import accuracy_score
 def home(request):
     return render(request, 'home.html')
 
+def menu(request):
+    return render(request, 'menu.html')
+
 def predict(request):
     return render(request, 'predict.html')
 

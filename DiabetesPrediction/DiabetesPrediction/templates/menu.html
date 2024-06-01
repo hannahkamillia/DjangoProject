@@ -1,0 +1,138 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<style>
+        body{
+            background-image:url("{% static '\diabetespredict\images\background.jpg'%}");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        .topnav {
+            background-color: #83b578;
+            overflow: hidden;
+        }
+        .topnav a {
+            float: right;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        .topnav a:hover {
+            background-color: #111;
+        }
+/* Site Heading */
+.site-heading h3{
+    font-size : 40px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+.border {
+    background: #e8e8e8 ;
+    height: 1px;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 45px;
+    float:left;
+}
+
+/* Feature-CSS */
+
+.icon {
+    color : #fff;
+    padding:15px;
+    background:#323232 ;
+    font-size:50px;
+    border-radius:90px;
+    border:10px solid #323232 ;
+    
+}
+.feature-box {
+    text-align: center;
+    padding: 20px;
+    transition: .5s;
+    margin-bottom: 30px;
+    border: 1px solid #e8e8e8;
+}
+.feature-box:hover {
+   
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.feature-box h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 25px 0 15px;
+}
+</style>
+</head>
+<!------ Include the above in your HEAD tag ---------->
+<body> 
+    <div class = 'topnav'>
+        <ul>
+            <a href="home">Home</a>
+            <a href="predict">Diabetes</a>
+            <a href="contact.asp">Kidney diseases</a>
+            <a href="about.asp">Heart Disease</a>
+            <a href="about.asp">Breast Cancer</a>
+          </ul>
+      </div>
+    <div class="Features-section paddingTB60 ">
+        <div class="container">
+	        <div class="row">
+		            <div class="col-md-12 site-heading ">
+						<h3>Disease Predictors</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,  </p>
+						<div class="border"></div>
+					</div>
+	            </div>
+	            <div class="row">
+						<div class="col-sm-6 col-md-3">
+							<div class="col-md-12 feature-box">
+								<img class="card-img-top" src="\static\diabetespredict\images\menu1.jpg" width = "100">
+								<h4>Heart Disease</h4>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sapien augue, dictum et gravida et, viverra et est.</p>
+								<button type="button" class="btn btn-primary site-btn">Start Right Now</button>
+
+							</div>
+						</div> <!-- End Col -->
+						<div class="col-sm-6 col-md-3">
+								<div class="col-md-12 feature-box">
+                                <img class="card-img-top" src="\static\diabetespredict\images\menu3.png" width = "100">
+								<h4>Kidney Disease</h4>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sapien augue, dictum et gravida et, viverra et est. </p>
+							    <button type="button" class="btn btn-primary site-btn">Start Right Now</button>
+							</div>
+						</div> <!-- End Col -->	
+						
+						<div class="col-sm-6 col-md-3">
+								<div class="feature-box">
+                                <img class="card-img-top" src="\static\diabetespredict\images\menu2.png" width = "100">
+								<h4>Diabetes</h4>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sapien augue, dictum et gravida et, viverra et est. </p>
+							    <form action = "predict"> 
+                                    <button type="button" class="btn btn-primary site-btn">Start Right Now</button>
+                                </form>
+							</div>
+						</div> <!-- End Col -->
+						<div class="col-sm-6 col-md-3">
+								<div class="col-md-12 feature-box">
+                                <img class="card-img-top" src="\static\diabetespredict\images\menu4.png" width = "100">
+								<h4>Breast Cancer</h4>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sapien augue, dictum et gravida et, viverra et est. </p>
+							    <button type="button" class="btn btn-primary site-btn">Start Right Now</button>
+							</div>
+						</div> <!-- End Col -->
+						
+	
+					</div>
+                </div>
+</div>
+</body>

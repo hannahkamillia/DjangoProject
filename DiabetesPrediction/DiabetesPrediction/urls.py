@@ -21,6 +21,11 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('menu/', views.menu),
     path('predict/', views.predict),
     path('predict/result', views.result),
+    path('menu/predict', views.predict),
+     path('menu/menu/predict', views.predict),
+    path('menu/home', views.home),
+    path('menu/menu', views.menu),
 ]
