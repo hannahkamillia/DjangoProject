@@ -25,7 +25,10 @@ urlpatterns = [
     path('predict/', views.predict),
     path('predict/result', views.result),
     path('menu/predict', views.predict),
-     path('menu/menu/predict', views.predict),
+    path('menu/menu/predict', views.predict),
     path('menu/home', views.home),
     path('menu/menu', views.menu),
+    path('menu/result', views.result),
+    path('predict/negative', views.negative),
+    path('predict/positive', views.positive),
 ]

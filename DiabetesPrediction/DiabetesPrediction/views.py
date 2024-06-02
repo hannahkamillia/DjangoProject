@@ -16,8 +16,14 @@ def menu(request):
 def predict(request):
     return render(request, 'predict.html')
 
+def negative(request):
+    return render(request, 'negative.html')
+
+def positive(request):
+    return render(request, 'positive.html')
+
 def result(request):
-    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\diabetes.csv")
+    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\diabetes\diabetes.csv")
 
     X = data.drop("Outcome", axis=1)
     Y = data['Outcome']
@@ -40,9 +46,9 @@ def result(request):
 
     result1 = ""
     if pred==[1]:
-      result1 = "Positive"  
+      return render(request, "positive.html", {"result2": result1})  
     else:
-        result1 = "Negative"
+        return render(request, "negative.html", {"result2": result1})
 
-    return render(request, "predict.html", {"result2": result1})
+    #!return render(request, "predict.html", {"result2": result1})
 
