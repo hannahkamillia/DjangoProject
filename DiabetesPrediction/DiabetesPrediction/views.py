@@ -22,8 +22,11 @@ def negative(request):
 def positive(request):
     return render(request, 'positive.html')
 
+def Recomm(request):
+    return render(request, 'Recomm.html')
+
 def result(request):
-    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\diabetes\diabetes.csv")
+    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\diabetes.csv")
 
     X = data.drop("Outcome", axis=1)
     Y = data['Outcome']
