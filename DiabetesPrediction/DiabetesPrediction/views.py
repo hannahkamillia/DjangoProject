@@ -25,17 +25,21 @@ def positive(request):
 def Recomm(request):
     return render(request, 'Recomm.html')
 
+#!Read the data from the dataset
 def result(request):
     data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\diabetes.csv")
 
+#!Train test split
     X = data.drop("Outcome", axis=1)
     Y = data['Outcome']
 
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
 
+#!Train the model
     model = LogisticRegression()
     model.fit(X_train, Y_train)
 
+#!Input from user
     val1 = float(request.GET['n1'])
     val2 = float(request.GET['n2'])
     val3 = float(request.GET['n3'])
@@ -47,6 +51,7 @@ def result(request):
 
     pred = model.predict([[val1,val2,val3,val4,val5,val6,val7,val8]])
 
+#!Decide to show the outcome
     result1 = ""
     if pred==[1]:
       return render(request, "positive.html", {"result2": result1})  
