@@ -25,6 +25,9 @@ def positive(request):
 def Recomm(request):
     return render(request, 'Recomm.html')
 
+def heart(request):
+    return render(request, 'heart.html')
+
 #!Read the data from the dataset
 def result(request):
     data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\diabetes.csv")

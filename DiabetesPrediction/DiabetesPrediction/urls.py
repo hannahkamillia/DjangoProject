@@ -33,4 +33,6 @@ urlpatterns = [
     path('predict/positive', views.positive),
     path('predict/Recomm', views.Recomm),
     path('menu/Recomm', views.Recomm),
+    path('predict/heart', views.heart),
+    path('menu/heart', views.heart),
 ]
