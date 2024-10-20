@@ -27,7 +27,7 @@ def Recomm(request):
 
 #!Read the data from the dataset
 def result(request):
-    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\diabetes.csv")
+    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\diabetes\diabetes.csv")
 
 #!Train test split
     X = data.drop("Outcome", axis=1)
