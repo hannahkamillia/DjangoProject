@@ -46,6 +46,14 @@
             border-radius: 15px;
             box-shadow: 2px 2px gray;
         }
+        select {
+            padding: 12px 12px;
+            margin: 2px;
+            box-sizing: border-box;
+            border-radius: 15px;
+            box-shadow: 2px 2px gray;
+        }
+      
         input[type=submit] {
             background-color: green;
             border: 2px;
@@ -56,6 +64,10 @@
             padding: 8px 18px;
             cursor: pointer;
             margin: 20px;
+        }
+
+        td{
+
         }
     </style>
 
@@ -120,7 +132,7 @@
 
         <div class="container">
         
-            <form action="/predict" method="POST">
+            <form action="heart_result">
                 <table> 
                 <!--label for="age">Age</label>
                 <input type="number" id="age" name="age" placeholder="Enter your age" required -->
@@ -164,8 +176,14 @@
                     <td align = "left"><input type="number" id="chol" name="chol" placeholder="Cholesterol level (mg/dL)" required></td>
                 </tr>
                 <tr> 
-                <td align ="right">Fasting Blood Sugar (>120 mg/dL) (0 = no, 1 = yes)</td>
-                <td align ="left"><input type="number" id="fbs" name="fbs" placeholder="Fasting blood sugar" required></td>
+                <td align ="right">Is your Fasting Blood Sugar (>120 mg/dL)?</td>
+                <td align ="left">
+                    <!--input type="number" id="fbs" name="fbs" placeholder="Fasting blood sugar" required-->
+                    <select name="fbs" id="fbs" placeholder="Insert FBS">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </td>
                 </tr>
 
                 <tr> 

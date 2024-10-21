@@ -18,21 +18,38 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+from django.contrib import admin
+from django.urls import path
+from . import views  # Ensure you're importing views correctly
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    # Home and Menu routes
     path('', views.home, name='home'),
     path('menu/', views.menu),
-    path('predict/', views.predict),
-    path('predict/result', views.result),
-    path('menu/predict', views.predict),
-    path('menu/menu/predict', views.predict),
     path('menu/home', views.home),
     path('menu/menu', views.menu),
-    path('menu/result', views.result),
+
+    # Prediction routes
+    path('predict/', views.predict),
+    path('menu/diabetes_result', views.diabetes_result),
+    path('predict/diabetes_result', views.diabetes_result),  # Updated from 'result' to 'diabetes_result'
+    path('menu/predict', views.predict),
+    path('menu/heart', views.heart),
+    path('menu/menu/predict', views.predict),
+    path('menu/heart_result', views.heart_result),  # Updated from 'result' to 'diabetes_result'
+
+    # Positive/Negative pages
     path('predict/negative', views.negative),
     path('predict/positive', views.positive),
+
+    # Recommendation page
     path('predict/Recomm', views.Recomm),
     path('menu/Recomm', views.Recomm),
-    path('predict/heart', views.heart),
-    path('menu/heart', views.heart),
+
+    # Heart model prediction routes
+    path('predict/heart', views.heart_result),  # Updated to 'heart_result'
+    path('menu/heart', views.heart_result),  # Updated to 'heart_result'
 ]
+
