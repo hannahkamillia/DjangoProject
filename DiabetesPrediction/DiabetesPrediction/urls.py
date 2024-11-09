@@ -39,6 +39,11 @@ urlpatterns = [
     path('menu/heart', views.heart),
     path('menu/menu/predict', views.predict),
     path('menu/heart_result', views.heart_result),  # Updated from 'result' to 'diabetes_result'
+    path('menu/breast', views.breast),
+    path('menu/menu/breast', views.breast),
+    path('menu/breast_result', views.breast_result),
+    path('breast/breast_result', views.breast_result),
+
 
     # Positive/Negative pages
     path('predict/negative', views.negative),
@@ -51,5 +56,9 @@ urlpatterns = [
     # Heart model prediction routes
     path('predict/heart', views.heart_result),  # Updated to 'heart_result'
     path('menu/heart', views.heart_result),  # Updated to 'heart_result'
+
+      # Heart model prediction routes
+    path('predict/breast', views.breast_result),  # Updated to 'heart_result'
+    path('menu/breast', views.breast_result),  # Updated to 'heart_result'
 ]
 

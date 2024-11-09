@@ -29,6 +29,9 @@ def Recomm(request):
 def heart(request):
     return render(request, 'heart.html')
 
+def breast(request):
+    return render(request, 'breast.html')
+
 #!Read the data from the diabetes dataset
 def diabetes_result(request):
     data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\diabetes.csv")
@@ -117,6 +120,48 @@ def heart_result(request):
     else:
         return render(request, "negative.html", {"result2": "Negative for Heart Disease"})
 
+#!Breast Model
+def breast_result(request):
+
+#load data breast dataset
+    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\Breast_Cancer.csv")
+
+ # Prepare features (X) and target (y)
+    X = data[['Age', 'Tumor Size', 'Regional Node Examined', 'Reginol Node Positive']].copy()
+    y = data['Status']
+
+#split traintest
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+ # Scale the features
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test) 
+
+# Initialize and train the logistic regression model
+    breast_model = LogisticRegression(random_state=42)
+    breast_model.fit(X_train_scaled, y_train)
     
-    
+ # Get user input from the request
+    val1 = float(request.GET['age'])
+    val2 = float(request.GET['size'])
+    val3 = float(request.GET['node'])
+    val4 = float(request.GET['nodpos'])
+
+# Scale the input values as they need to match the training data scale
+    input_data = scaler.transform([[val1, val2, val3, val4]])
+
+# Make a prediction
+    pred = breast_model.predict(input_data)
+
+# Decide the outcome and render the appropriate template
+    if pred == [1]:
+        return render(request, "positive.html", {"result2": "Positive for Heart Disease"})  
+    else:
+        return render(request, "negative.html", {"result2": "Negative for Heart Disease"})
+
+
+
+
+
 
