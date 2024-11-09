@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 
@@ -32,9 +33,12 @@ def heart(request):
 def breast(request):
     return render(request, 'breast.html')
 
+def kidney(request):
+    return render(request, 'kidney.html')
+
 #!Read the data from the diabetes dataset
 def diabetes_result(request):
-    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\diabetes.csv")
+    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\diabetes\diabetes.csv")
 
 #!Train test split
     X = data.drop("Outcome", axis=1)
@@ -75,7 +79,7 @@ def diabetes_result(request):
 #!Heart Model
 def heart_result(request):
     # Load the heart disease dataset
-    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\Heart_Disease_Prediction.csv")
+    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\Heart_Disease_Prediction.csv")
 
     # Prepare features (X) and target (y)
     X = data.drop(columns=['Heart Disease'])  
@@ -159,9 +163,71 @@ def breast_result(request):
         return render(request, "positive.html", {"result2": "Positive for Heart Disease"})  
     else:
         return render(request, "negative.html", {"result2": "Negative for Heart Disease"})
+    
+#Kidney Model
+def kidney_result(request):
 
+    #Load and preprocess the data
+    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\kidney_disease.csv")
 
+    #Encode categorical features
+    label_cols = ['rbc', 'pc', 'pcc', 'ba', 'htn', 'dm', 'cad', 'appet', 'pe', 'ane', 'classification']
+    for col in label_cols:
+        data[col] = data[col].astype(str)
+        data[col] = data[col].factorize()[0]
 
+    #Replace blank values with NaN and handle missing values
+    #data.replace('\t?', pd.NA, inplace=True)
+    #data.fillna(data.mean(), inplace=True)
+        numeric_columns = data.select_dtypes(include=['float64', 'int64']).columns
+        data[numeric_columns] = data[numeric_columns].fillna(data[numeric_columns].mean())
 
+    #Separate features and target
+    X = data.drop(columns=["classification"])
+    y = data["classification"]
 
+    #Replace non-numeric values with NaN, then handle NaNs (e.g., fill with mean)
+    X = X.apply(pd.to_numeric, errors='coerce')
 
+    #Fill NaNs with the mean of each column
+    X.fillna(X.mean(), inplace=True)
+
+    # Ensure y is also numeric, if needed
+    y = pd.to_numeric(y, errors='coerce')
+
+    # Train a temporary Random Forest to get feature importances
+    rf_temp = RandomForestClassifier(random_state=42)
+    rf_temp.fit(X, y)
+
+    # Get feature importances and select the top features
+    feature_importances = pd.Series(rf_temp.feature_importances_, index=X.columns)
+    top_features = feature_importances.nlargest(8).index  # Select top 8 features
+    X_top = X[top_features]
+
+    # Split the data using only the top features
+    X_train, X_test, y_train, y_test = train_test_split(X_top, y, test_size=0.2, random_state=101)
+
+    # Train the final model using only the selected features
+    model = RandomForestClassifier(random_state=42)
+    model.fit(X_train, y_train)
+
+    # Testing function in Django
+    # def kidney_result(request):
+    # Input from user based on selected top features
+    kid_val1 = float(request.GET['n1'])
+    kid_val2 = float(request.GET['n2'])
+    kid_val3 = float(request.GET['n3'])
+    kid_val4 = float(request.GET['n4'])
+    kid_val5 = float(request.GET['n5'])
+    kid_val6 = float(request.GET['n6'])
+    kid_val7 = float(request.GET['n7'])
+    kid_val8 = float(request.GET['n8'])
+
+    # Predict based on user input
+    pred = model.predict([[kid_val1, kid_val2, kid_val3, kid_val4, kid_val5, kid_val6, kid_val7, kid_val8]])
+
+    # Show the result
+    if pred == [1]:
+        return render(request, "positive.html", {"result2": "Positive for Kidney Disease"})  
+    else:
+        return render(request, "negative.html", {"result2": "Negative for Kidney Disease"})

@@ -43,6 +43,10 @@ urlpatterns = [
     path('menu/menu/breast', views.breast),
     path('menu/breast_result', views.breast_result),
     path('breast/breast_result', views.breast_result),
+    path('menu/kidney', views.kidney),
+    path('menu/menu/kidney', views.kidney),
+    path('menu/kidney_result', views.kidney_result),
+    path('menu/kidney_result', views.kidney_result),
 
 
     # Positive/Negative pages
