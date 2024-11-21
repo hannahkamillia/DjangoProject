@@ -46,7 +46,11 @@ urlpatterns = [
     path('menu/kidney', views.kidney),
     path('menu/menu/kidney', views.kidney),
     path('menu/kidney_result', views.kidney_result),
+<<<<<<< HEAD
    
+=======
+    path('kidney/kidney_result', views.kidney_result),
+>>>>>>> e18df5b26ee1c33a2e4f201d395f74891874714b
 
 
     # Positive/Negative pages
