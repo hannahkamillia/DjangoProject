@@ -2,11 +2,15 @@ from django.shortcuts import render
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
-from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.neighbors import KNeighborsClassifier
+
 
 
 def home(request):
@@ -163,71 +167,91 @@ def breast_result(request):
         return render(request, "positive.html", {"result2": "Positive for Heart Disease"})  
     else:
         return render(request, "negative.html", {"result2": "Negative for Heart Disease"})
-    
-#Kidney Model
-def kidney_result(request):
 
-    #Load and preprocess the data
+#Kidney Logistic Regression
+def kidney_result(request):
     data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\kidney_disease.csv")
 
-    #Encode categorical features
-    label_cols = ['rbc', 'pc', 'pcc', 'ba', 'htn', 'dm', 'cad', 'appet', 'pe', 'ane', 'classification']
-    for col in label_cols:
-        data[col] = data[col].astype(str)
-        data[col] = data[col].factorize()[0]
+    # Drop ID column
+    data = data.drop(columns=["id"], errors='ignore')
 
-    #Replace blank values with NaN and handle missing values
-    #data.replace('\t?', pd.NA, inplace=True)
-    #data.fillna(data.mean(), inplace=True)
-        numeric_columns = data.select_dtypes(include=['float64', 'int64']).columns
-        data[numeric_columns] = data[numeric_columns].fillna(data[numeric_columns].mean())
+    #Map categorical columns to binary values
+    binary_mapping = {"yes": 1, "no": 0,
+                "good": 1, "poor": 0,
+                "present": 1, "notpresent": 0,
+                "normal": 1, "abnormal": 0}
 
-    #Separate features and target
-    X = data.drop(columns=["classification"])
-    y = data["classification"]
+    # Handle missing values by imputing with the mean (for numerical columns)
+    imputer = SimpleImputer(strategy='mean')  # Can change strategy if needed
+    data_imputed = pd.DataFrame(imputer.fit_transform(data.select_dtypes(include=['float64', 'int64'])), columns=data.select_dtypes(include=['float64', 'int64']).columns)
+    
+    # Merge the cleaned data back
+    data[data_imputed.columns] = data_imputed
 
-    #Replace non-numeric values with NaN, then handle NaNs (e.g., fill with mean)
-    X = X.apply(pd.to_numeric, errors='coerce')
+    # Handle missing categorical data by using the mode (most frequent value)
+    cat_columns = data.select_dtypes(include=['object']).columns
+    for col in cat_columns:
+        mode_value = data[col].mode()[0]
+        data[col].fillna(mode_value, inplace=True)
 
-    #Fill NaNs with the mean of each column
-    X.fillna(X.mean(), inplace=True)
+    # Apply mapping to all columns except 'classification'
+    for col in data.columns:
+        if col != 'classification' and data[col].dtype == 'object':  # Only apply this to string columns, excluding 'classification'
+            # Replace categorical values based on the binary_mapping
+            data[col] = data[col].replace(binary_mapping)
+        
+            # Only apply .str methods if the column is truly of string type
+            if data[col].dtype == 'object':  # Check if the column is still of string type
+                data[col] = data[col].str.strip()  # Remove leading/trailing spaces
+                data[col] = data[col].replace(r'\t\?', '', regex=True)  # Remove the specific '\t?' if exists
+        
+            # Convert to numeric, and fill NaN values with 0 (or another suitable value)
+            data[col] = pd.to_numeric(data[col], errors='coerce')  # Convert to numeric, NaN for invalid
+            data[col] = data[col].fillna(0)  # Fill NaNs with 0
+            data[col] = data[col].astype(int)  # Ensure the result is integer (1 or 0)
 
-    # Ensure y is also numeric, if needed
-    y = pd.to_numeric(y, errors='coerce')
+    # Now map the 'classification' column to binary values manually
+    data['classification'] = data['classification'].replace({"ckd": 1, "ckd\t":1, "notckd": 0})
 
-    # Train a temporary Random Forest to get feature importances
-    rf_temp = RandomForestClassifier(random_state=42)
-    rf_temp.fit(X, y)
+    # Separate features and target
+    X = data.drop("classification", axis=1)
+    Y = data['classification']
 
-    # Get feature importances and select the top features
-    feature_importances = pd.Series(rf_temp.feature_importances_, index=X.columns)
-    top_features = feature_importances.nlargest(8).index  # Select top 8 features
-    X_top = X[top_features]
+    #Train-test split
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
 
-    # Split the data using only the top features
-    X_train, X_test, y_train, y_test = train_test_split(X_top, y, test_size=0.2, random_state=101)
+    # Scale the features (ensure all values are numeric and clean)
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
 
-    # Train the final model using only the selected features
-    model = RandomForestClassifier(random_state=42)
-    model.fit(X_train, y_train)
+    # Train the logistic regression model
+    model = LogisticRegression(max_iter=1000, random_state=42)
+    model.fit(X_train_scaled, Y_train)
 
-    # Testing function in Django
-    # def kidney_result(request):
-    # Input from user based on selected top features
-    kid_val1 = float(request.GET['n1'])
-    kid_val2 = float(request.GET['n2'])
-    kid_val3 = float(request.GET['n3'])
-    kid_val4 = float(request.GET['n4'])
-    kid_val5 = float(request.GET['n5'])
-    kid_val6 = float(request.GET['n6'])
-    kid_val7 = float(request.GET['n7'])
-    kid_val8 = float(request.GET['n8'])
+    # Initialize and train the model
+    model = LogisticRegression(class_weight='balanced')
+    model.fit(X_train_scaled, Y_train)
 
-    # Predict based on user input
-    pred = model.predict([[kid_val1, kid_val2, kid_val3, kid_val4, kid_val5, kid_val6, kid_val7, kid_val8]])
+    # Handle user input (make sure the inputs are valid and match the expected format)
+    input_data = pd.DataFrame([[int(request.GET['n1']), float(request.GET['n2']), float(request.GET['n3']),
+                                float(request.GET['n4']), float(request.GET['n5']), int(request.GET['n6']),
+                                int(request.GET['n7']), int(request.GET['n8']), int(request.GET['n9']),
+                                float(request.GET['n10']), float(request.GET['n11']), float(request.GET['n12']),
+                                float(request.GET['n13']), float(request.GET['n14']), float(request.GET['n15']),
+                                float(request.GET['n16']), float(request.GET['n17']), float(request.GET['n18']),
+                                int(request.GET['n19']), int(request.GET['n20']), int(request.GET['n21']),
+                                int(request.GET['n22']), int(request.GET['n23']), int(request.GET['n24'])]],
+                               columns=X.columns)
 
-    # Show the result
-    if pred == [1]:
-        return render(request, "positive.html", {"result2": "Positive for Kidney Disease"})  
+    # Scale the user input
+    input_data_scaled = scaler.transform(input_data)
+
+    # Make the prediction
+    pred = model.predict(input_data_scaled)
+
+    # Render the result
+    if pred == 0:
+        return render(request, "positive.html")
     else:
-        return render(request, "negative.html", {"result2": "Negative for Kidney Disease"})
+        return render(request, "negative.html")
