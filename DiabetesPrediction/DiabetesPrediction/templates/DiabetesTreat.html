@@ -1,0 +1,325 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation and Treatment</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    
+    <style>
+        body {
+            background-image: url("{% static 'diabetespredict/images/background.jpg' %}");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        .topnav {
+            background-color: #83b578;
+            overflow: hidden;
+        }
+        .topnav a {
+            float: right;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        .topnav a:hover {
+            background-color: #111;
+        }
+        .site-heading h3 {
+            font-size: 40px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-align: center;
+        }
+        h2 {
+            font-size: 15px; /* Reduced size */
+        }
+        .border {
+            background: #e8e8e8;
+            height: 1px;
+            width: 40%;
+            margin: 20px auto;
+        }
+        .accordion {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            max-width: 600px;
+            margin: 30px auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .accordion-item {
+            border-bottom: 1px solid #ddd;
+        }
+        .accordion-header {
+            padding: 15px;
+            cursor: pointer;
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+        .header-dietary {
+            position: relative;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .header-dietary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("{% static 'diabetespredict/images/diet.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            opacity: 0.6;
+            z-index: -1;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header-medical {
+            position: relative;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .header-medical::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("{% static 'diabetespredict/images/medical1.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        .header-lifestyle {
+            position: relative;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .header-lifestyle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("{% static 'diabetespredict/images/exercise.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            opacity: 0.6;
+            z-index: -1;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .accordion-header:hover {
+            background-color: #eee;
+        }
+        .accordion-body {
+            padding: 15px;
+            display: none;
+            background-color: #fff;
+        }
+        .accordion-body-content {
+            padding: 10px;
+        }
+    </style>
+    
+    <script>
+        function toggleAccordion(element) {
+            const body = element.nextElementSibling; // Get the next sibling (accordion-body)
+            const isOpen = body.style.display === "block"; // Check if it's currently open
+            
+            // Close all open accordions
+            document.querySelectorAll(".accordion-body").forEach((accordionBody) => {
+                accordionBody.style.display = "none";
+            });
+            
+            // Toggle the clicked accordion
+            if (!isOpen) {
+                body.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="topnav">
+        <ul>
+            <a href="home">Home</a>
+            <a href="predict">Diabetes</a>
+            <a href="contact.asp">Kidney diseases</a>
+            <a href="about.asp">Heart Disease</a>
+            <a href="about.asp">Breast Cancer</a>
+        </ul>
+    </div>
+
+    <!-- Page Header -->
+    <div class="Features-section paddingTB60">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 site-heading">
+                    <h3>Recommendation and Treatment</h3>
+                    <div class="border"></div>
+                </div>
+                <div>
+                    <h4>OVERVIEW</h4>
+                    Diabetes is a chronic, metabolic disease characterized by elevated levels of blood glucose (or blood sugar), which leads over time to serious damage to the heart, blood vessels, eyes, kidneys and nerves. The most common is type 2 diabetes, usually in adults, which occurs when the body becomes resistant to insulin or doesn't make enough insulin.
+                    In the past 3 decades the prevalence of type 2 diabetes has risen dramatically in countries of all income levels. Type 1 diabetes, once known as juvenile diabetes or insulin-dependent diabetes, is a chronic condition in which the pancreas produces little or no insulin by itself. For people living with diabetes, access to affordable treatment, including insulin, is critical to their survival. There is a globally agreed target to halt the rise in diabetes and obesity by 2025.
+
+                    About 830 million people worldwide have diabetes, the majority living in low-and middle-income countries. More than half of people living with diabetes are not receiving treatment. Both the number of people with diabetes and the number of people with untreated diabetes have been steadily increasing over the past decades.
+                </div>
+                
+                <div>
+                    <br><br>
+                    <h5>Prevention and Treatment</h5>
+                </div>
+                
+                <!-- Accordion -->
+                <div class="accordion">
+                   
+                    <div class="accordion-item">
+                        <div class="accordion-header header-dietary" onclick="toggleAccordion(this)">
+                            DIETARY
+                        </div>
+                        <div class="accordion-body">
+                            <div class="accordion-body-content">
+                                <ul>
+                                    <li>Modified Atkins diet showed superior improvement in HbA1c, HDL, and CRP levels.</li>
+                                    <li>Atkins Diet is a low-carbohydrate eating plan that emphasizes the consumption of proteins and fats while significantly reducing carbohydrate intake.</li>
+                                    <li>High carbohydrate and Modified Atkins diets improved HDL levels significantly.</li>
+                                    <li>Patients are encouraged to consume a variety of fruits. Portion size is crucial, with two servings of fruit per day recommended.</li>
+                                    <li>Choose healthier cooking methods such as steaming, stewing, braising, baking, grilling, or stir-frying.</li>
+                                    <li>Opting for unsweetened drinks like green tea or black coffee is advisable.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header header-medical" onclick="toggleAccordion(this)">
+                            MEDICAL TREATMENT
+                        </div>
+                        <div class="accordion-body">
+                            <div class="accordion-body-content">
+                                <ul>
+                                    <li>Effective treatments for diabetes mellitus include pancreas, islets of Langerhans, and individual beta cell transplants.</li>
+                                    <li>Momordica charantia L. (Bitter Melon): This plant is known for its ability to lower blood sugar levels.</li>
+                                    <li>Syzygium cumini (L.) Skeels (Jamun): Beneficial for controlling blood sugar levels.</li>
+                                    <li>Ocimum tenuiflorum L. (Holy Basil): Helps regulate blood sugar levels.</li>
+                                    <li>Gymnema: Enhances insulin sensitivity and lowers blood sugar levels.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header header-lifestyle" onclick="toggleAccordion(this)">Lifestyle</div>
+                        <div class="accordion-body">
+                            <div class="accordion-body-content">
+                               <h2> Benefits of exercise</h2> 
+                                <ul>
+                                    <li>Exercise helps muscles use blood sugar for energy.</li>
+                                    <li>Regular activity improves insulin efficiency and lowers blood sugar levels.</li>
+                                    <li>Strenuous workouts have longer-lasting effects, but even light activities like housework, gardening, and walking are beneficial.</li>
+                                </ul>
+                                <h2>What to Do</h2>
+                             <h2>Consult Your Healthcare Professional</h2>
+                                <ul>
+                                     <li>Get advice on the right type and amount of exercise for you.</li>
+                                     <li>Aim for at least <strong>150 minutes/week</strong> of moderate aerobic activity (e.g., walking, biking, swimming).</li>
+                                     <li>Include <strong>strength-building exercises</strong> 2–3 times a week.</li>
+                                </ul>
+
+                                <h2>Ease Into Activity</h2>
+                                <ul>
+                                    <li>If you're inactive, check your overall health before starting.</li>
+                                    <li>Begin with a balance of aerobic and muscle-strengthening exercises.</li>
+                                </ul>
+
+                                <h2>Set a Schedule</h2>
+                                <ul>
+                                    <li>Choose the best time of day to align exercise with your meals and medication schedules.</li>
+                                </ul>
+
+                                <h2>Know Your Numbers</h2>
+                                <ul>
+                                    <li>Discuss target blood sugar levels with your healthcare provider before starting exercise.</li>
+                                </ul>
+
+                                <h2>Monitor Blood Sugar</h2>
+                                <ul>
+                                    <li>If you take insulin or other diabetes medicines, check your blood sugar:
+                                        <ul>
+                                            <li><strong>Before, during, and after exercise.</strong></li>
+                                            <li>Be aware of symptoms of low blood sugar (e.g., shakiness, fatigue, confusion).</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                                <h2>Have Snacks as Needed</h2>
+                                <ul>
+                                    <li>Eat a small snack (15–30 grams of carbs) if your blood sugar is low (&lt;90 mg/dL or 5.0 mmol/L) before exercising.</li>
+                                    <li>If your blood sugar is between 90–124 mg/dL (5.0–6.9 mmol/L), consider 10 grams of glucose.</li>
+                                </ul>
+
+                                <h2>Stay Hydrated</h2>
+                                <ul>
+                                    <li>Drink plenty of water or fluids during exercise to prevent dehydration, which can affect blood sugar levels.</li>
+                                </ul>
+
+                                <h2>Be Prepared</h2>
+                                <ul>
+                                    <li>Carry a small snack, glucose tablets, or gel for quick blood sugar boosts.</li>
+                                    <li>Wear medical identification (e.g., bracelet, necklace, or card) in case of emergencies.</li>
+                                </ul>
+
+                                <h2>Adjust Your Treatment Plan</h2>
+                                <ul>
+                                    <li>If you take insulin, lower your dose before exercise if needed.</li>
+                                    <li>Monitor blood sugar closely after intense activity, as low levels can occur hours later.</li>
+                                    <li>Consult your healthcare professional for advice on adjusting your medication.</li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

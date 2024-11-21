@@ -21,6 +21,9 @@ def predict(request):
 def negative(request):
     return render(request, 'negative.html')
 
+def malignant(request):
+    return render(request, 'malignant.html')
+
 def positive(request):
     return render(request, 'positive.html')
 
@@ -38,7 +41,7 @@ def kidney(request):
 
 #!Read the data from the diabetes dataset
 def diabetes_result(request):
-    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\diabetes\diabetes.csv")
+    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\diabetes.csv")
 
 #!Train test split
     X = data.drop("Outcome", axis=1)
@@ -128,39 +131,42 @@ def heart_result(request):
 def breast_result(request):
 
 #load data breast dataset
-    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\Breast_Cancer.csv")
+    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\Breast_cancer_data.csv")
 
  # Prepare features (X) and target (y)
-    X = data[['Age', 'Tumor Size', 'Regional Node Examined', 'Reginol Node Positive']].copy()
-    y = data['Status']
+    X = data.drop(columns=['diagnosis'])  # Drop the 'diagnosis' column for input features
+    y = data['diagnosis']  # 'diagnosis' column is the target variable
 
-#split traintest
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Split the dataset into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
  # Scale the features
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test) 
 
-# Initialize and train the logistic regression model
-    breast_model = LogisticRegression(random_state=42)
-    breast_model.fit(X_train_scaled, y_train)
+# Initialize and train the Logistic Regression model
+    breast_model = LogisticRegression(random_state=42, max_iter=1000)
+    breast_model.fit(X_train, y_train)
+
     
  # Get user input from the request
-    val1 = float(request.GET['age'])
-    val2 = float(request.GET['size'])
-    val3 = float(request.GET['node'])
-    val4 = float(request.GET['nodpos'])
+    val1 = float(request.GET['avgtum'])
+    val2 = float(request.GET['texture'])
+    val3 = float(request.GET['peri'])
+    val4 = float(request.GET['area'])
+    val5 = float(request.GET['smooth'])
 
 # Scale the input values as they need to match the training data scale
-    input_data = scaler.transform([[val1, val2, val3, val4]])
+    input_data = scaler.transform([[val1, val2, val3, val4, val5]])
 
 # Make a prediction
     pred = breast_model.predict(input_data)
 
 # Decide the outcome and render the appropriate template
     if pred == [1]:
-        return render(request, "positive.html", {"result2": "Positive for Heart Disease"})  
+        return render(request, "malignant.html", {"result2": "Malignant tumor potential"})  
     else:
         return render(request, "negative.html", {"result2": "Negative for Heart Disease"})
     
