@@ -30,6 +30,8 @@ urlpatterns = [
     path('menu/', views.menu),
     path('menu/home', views.home),
     path('menu/menu', views.menu),
+    path('menu/menu/kidney', views.kidney),
+    
 
     # Prediction routes
     path('predict/', views.predict),
@@ -48,15 +50,31 @@ urlpatterns = [
     path('menu/kidney_result', views.kidney_result),
     path('kidney/kidney_result', views.kidney_result),
 
+    #Treatment Pages
+    path('menu/DiabetesTreat', views.DiabetesTreat),
+    path('predict/DiabetesTreat', views.DiabetesTreat),
+    path('menu/HeartTreat', views.HeartTreat),
+    path('heart/HeartTreat', views.HeartTreat),
+    path('menu/BreastTreat', views.BreastTreat),
+    path('menu/KidneyTreat', views.KidneyTreat),
+
 
     # Positive/Negative pages
-    path('predict/negative', views.negative),
-    path('predict/positive', views.positive),
-    
+    path('predict/NegativeDiabetes', views.NegativeDiabetes),
+    path('predict/PositiveDiabetes', views.PositiveDiabetes),
+    path('kidney/NegativeCKD', views.NegativeCKD),
+    path('kidney/PositiveCKD', views.PositiveCKD),
+    path('heart/NegativeHeart', views.NegativeHeart),
+    path('heart/PositiveHeart', views.PositiveHeart),
+    path('breast/ResultBenign', views.ResultBenign),
+    path('breast/Malignant', views.malignant),
 
     # Recommendation page
     path('predict/Recomm', views.Recomm),
-    path('menu/Recomm', views.Recomm),
+    path('menu/DiabetesTreat', views.DiabetesTreat),
+    path('menu/HeartTreat', views.HeartTreat),
+    path('menu/KidneyTreat', views.KidneyTreat),
+    path('menu/BreastTreat', views.BreastTreat),
 
     # Heart model prediction routes
     path('predict/heart', views.heart_result),  # Updated to 'heart_result'

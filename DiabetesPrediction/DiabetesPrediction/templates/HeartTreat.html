@@ -214,7 +214,8 @@
             border-radius: 5px; /* Optional: rounds the image's corners slightly */
             margin-bottom: 10px; /* Adds spacing below the image */
         }
-
+ 
+       
 
     </style>
     
@@ -293,41 +294,10 @@
                                 <div id="overview">
                                     <h4>Overview</h4>
                                     <p>
-                                        Diabetes is a chronic, metabolic disease characterized by elevated levels of blood glucose (or blood sugar), which leads over time to serious damage to the heart, blood vessels, eyes, kidneys and nerves. The most common is type 2 diabetes, usually in adults, which occurs when the body becomes resistant to insulin or doesn't make enough insulin.
-                                        In the past 3 decades the prevalence of type 2 diabetes has risen dramatically in countries of all income levels. Type 1 diabetes, once known as juvenile diabetes or insulin-dependent diabetes, is a chronic condition in which the pancreas produces little or no insulin by itself. For people living with diabetes, access to affordable treatment, including insulin, is critical to their survival. There is a globally agreed target to halt the rise in diabetes and obesity by 2025.
-                    
-                                        About 830 million people worldwide have diabetes, the majority living in low-and middle-income countries. More than half of people living with diabetes are not receiving treatment. Both the number of people with diabetes and the number of people with untreated diabetes have been steadily increasing over the past decades.
+                                        Heart attacks and strokes are usually acute events and are mainly caused by a blockage that prevents blood from flowing to the heart or brain. The most common reason for this is a build-up of fatty deposits on the inner walls of the blood vessels that supply the heart or brain. Strokes can be caused by bleeding from a blood vessel in the brain or from blood clots.
                                     </p>
-                                    <div id="types">
-                                    <h5>Types of Diabetes</h5>
-                                    <div class="row">
-                                        <!-- Card 1: Type 1 Diabetes -->
-                                        <div class="col-md-6">
-                                            <div class="card shadow-sm mb-4">
-                                                <img src="{% static '\diabetespredict\images\diabetes1.jpg' %}" class="card-img-top" alt="Type 1 Diabetes">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Type 1 Diabetes</h5>
-                                                    <p class="card-text">
-                                                        An autoimmune disease where the body's immune system attacks the cells that produce insulin.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                
-                                        <!-- Card 2: Type 2 Diabetes -->
-                                        <div class="col-md-6">
-                                            <div class="card shadow-sm mb-4">
-                                                <img src="{% static '\diabetespredict\images\diabetes2.jpg' %}" class="card-img-top" alt="Type 2 Diabetes">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Type 2 Diabetes</h5>
-                                                    <p class="card-text">
-                                                        A condition where the body either doesn't produce enough insulin or can't use insulin effectively.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                     </div>
+
+                            
                                 </div>
     
                                 <div id="symptoms">
@@ -336,16 +306,17 @@
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
                                                 <img class="card-img-top" src="\static\diabetespredict\images\1.png" alt="Heart Disease">
-                                                <h4>Frequent Urination</h4>
-                                                <p>Often a result of high blood sugar levels, leading to increased thirst and fluid intake.</p>
+                                                <h4>Shortness of Breath (Dyspnea)</h4>
+                                                <p>Often described as a sensation of inadequate breathing, it is prevalent among patients with heart disease.</p>
                                     
                                             </div>
                                         </div><!-- End Col -->
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
                                                 <img class="card-img-top" src="\static\diabetespredict\images\2.png" alt="Heart Disease">
-                                                <h4>Excessive Thirst</h4>
-                                                <p>Known as polydipsia, this symptom is closely linked to frequent urination .</p>
+                                                <h4>Chest Pain</h4>
+                                                <p> A significant indicator, with studies showing that 90% of participants experiencing severe chest pain were diagnosed with heart disease. </p>
+                                               
                                                
                                             </div>
                                         </div> <!-- End Col -->	
@@ -353,8 +324,9 @@
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
                                                 <img class="card-img-top" src="\static\diabetespredict\images\3.png" alt="Heart Disease">
-                                                <h4>Weight Loss</h4>
-                                                <p> Unexplained weight loss can occur because of body breaking down fat and muscle for energy when it cannot utilize glucose .</p>
+                                                <h4>Swelling</h4>
+                                                <p>This symptom typically occurs in the lower extremities due to fluid accumulation.
+                                                </p>
                                                    
                                             </div>
                                         </div><!-- End Col -->
@@ -362,7 +334,8 @@
                                             <div class="col-md-12 feature-box card">
                                                 <img class="card-img-top" src="\static\diabetespredict\images\4.png" alt="Heart Disease">
                                                 <h4>Fatigue</h4>
-                                                <p>A common complaint, fatigue can stem from the body's inability to convert glucose into energy.</p>
+                                                <p>Reported by a substantial percentage of patients, fatigue can be debilitating and is frequently associated with heart conditions.
+                                                </p>
                                             </div>
                                         </div> <!-- End Col -->
                                         
@@ -382,12 +355,14 @@
                                             <div class="accordion-body">
                                                 <div class="accordion-body-content">
                                                     <ul>
-                                                        <li>Modified Atkins diet showed superior improvement in HbA1c, HDL, and CRP levels.</li>
-                                                        <li>Atkins Diet is a low-carbohydrate eating plan that emphasizes the consumption of proteins and fats while significantly reducing carbohydrate intake.</li>
-                                                        <li>High carbohydrate and Modified Atkins diets improved HDL levels significantly.</li>
-                                                        <li>Patients are encouraged to consume a variety of fruits. Portion size is crucial, with two servings of fruit per day recommended.</li>
-                                                        <li>Choose healthier cooking methods such as steaming, stewing, braising, baking, grilling, or stir-frying.</li>
-                                                        <li>Opting for unsweetened drinks like green tea or black coffee is advisable.</li>
+                                                        <li>The Mediterranean diet was found to be superior to a low-fat diet for patients with heart disease, with 17.3% experiencing major cardiovascular events compared to 22.2% in the low-fat group, according to a 7-year trial in Spain.
+                                                        </li>
+                                                        <li>A Mediterranean diet, rich in fruits, vegetables, nuts, whole grains, and healthy fats like extra virgin olive oil, is beneficial for people with heart disease. It emphasizes plant-based foods and reduces animal products, lowering cardiovascular disease risk and improving health outcomes.
+                                                        </li>
+                                                        <li>Diets rich in fruits, vegetables, legumes, whole grains, and lean proteins are recommended for heart disease. The Mediterranean, DASH, and plant-based diets are particularly cardioprotective, while minimizing processed foods, trans-fats, and sugar-sweetened beverages is crucial for cardiovascular health.
+                                                        </li>
+                                                        <li>The DASH diet, or Dietary Approach to Stop Hypertension, is a nonpharmacological dietary strategy designed to reduce hypertension and its complications. It emphasizes whole foods, including fruits, vegetables, whole grains, lean proteins, and low-fat dairy, while limiting sodium intake.
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -399,11 +374,15 @@
                                             <div class="accordion-body">
                                                 <div class="accordion-body-content">
                                                     <ul>
-                                                        <li>Effective treatments for diabetes mellitus include pancreas, islets of Langerhans, and individual beta cell transplants.</li>
-                                                        <li>Momordica charantia L. (Bitter Melon): This plant is known for its ability to lower blood sugar levels.</li>
-                                                        <li>Syzygium cumini (L.) Skeels (Jamun): Beneficial for controlling blood sugar levels.</li>
-                                                        <li>Ocimum tenuiflorum L. (Holy Basil): Helps regulate blood sugar levels.</li>
-                                                        <li>Gymnema: Enhances insulin sensitivity and lowers blood sugar levels.</li>
+                                                        <li>Ginseng: Known for its various health benefits, ginseng has been studied for its potential to improve cardiovascular health. It may help in managing conditions like hypertension and dyslipidemia, which are risk factors for heart disease.
+                                                        </li>
+                                                        <li>Oregano Leaves: Oregano is known for its antioxidant properties, which can help reduce oxidative stress in the body, benefiting heart health.
+                                                        </li>
+                                                        <li>Copolymer 1: This agent has been shown to effectively treat heart disease by modulating immune responses, potentially improving cardiac function.</li>
+                                                        <li>Arjuna Bark: Known for its traditional use in heart health, it is believed to help improve cardiac function and reduce symptoms of heart disease.
+                                                        </li>
+                                                        <li>Ganoderma Lucidum: Commonly known as reishi mushroom, Ganoderma lucidum has been recognized for its medicinal properties. It may have cardioprotective effects and is being researched for its role in treating various cardiovascular diseases, including coronary heart disease.
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -415,69 +394,11 @@
                                             <div class="accordion-body">
                                                 <div class="accordion-body-content">
                                                     <h2> Benefits of exercise</h2> 
-                                <ul>
-                                    <li>Exercise helps muscles use blood sugar for energy.</li>
-                                    <li>Regular activity improves insulin efficiency and lowers blood sugar levels.</li>
-                                    <li>Strenuous workouts have longer-lasting effects, but even light activities like housework, gardening, and walking are beneficial.</li>
-                                </ul>
-                                <h2>What to Do</h2>
-                             <h2>Consult Your Healthcare Professional</h2>
-                                <ul>
-                                     <li>Get advice on the right type and amount of exercise for you.</li>
-                                     <li>Aim for at least <strong>150 minutes/week</strong> of moderate aerobic activity (e.g., walking, biking, swimming).</li>
-                                     <li>Include <strong>strength-building exercises</strong> 2–3 times a week.</li>
-                                </ul>
-
-                                <h2>Ease Into Activity</h2>
-                                <ul>
-                                    <li>If you're inactive, check your overall health before starting.</li>
-                                    <li>Begin with a balance of aerobic and muscle-strengthening exercises.</li>
-                                </ul>
-
-                                <h2>Set a Schedule</h2>
-                                <ul>
-                                    <li>Choose the best time of day to align exercise with your meals and medication schedules.</li>
-                                </ul>
-
-                                <h2>Know Your Numbers</h2>
-                                <ul>
-                                    <li>Discuss target blood sugar levels with your healthcare provider before starting exercise.</li>
-                                </ul>
-
-                                <h2>Monitor Blood Sugar</h2>
-                                <ul>
-                                    <li>If you take insulin or other diabetes medicines, check your blood sugar:
-                                        <ul>
-                                            <li><strong>Before, during, and after exercise.</strong></li>
-                                            <li>Be aware of symptoms of low blood sugar (e.g., shakiness, fatigue, confusion).</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-
-                                <h2>Have Snacks as Needed</h2>
-                                <ul>
-                                    <li>Eat a small snack (15–30 grams of carbs) if your blood sugar is low (&lt;90 mg/dL or 5.0 mmol/L) before exercising.</li>
-                                    <li>If your blood sugar is between 90–124 mg/dL (5.0–6.9 mmol/L), consider 10 grams of glucose.</li>
-                                </ul>
-
-                                <h2>Stay Hydrated</h2>
-                                <ul>
-                                    <li>Drink plenty of water or fluids during exercise to prevent dehydration, which can affect blood sugar levels.</li>
-                                </ul>
-
-                                <h2>Be Prepared</h2>
-                                <ul>
-                                    <li>Carry a small snack, glucose tablets, or gel for quick blood sugar boosts.</li>
-                                    <li>Wear medical identification (e.g., bracelet, necklace, or card) in case of emergencies.</li>
-                                </ul>
-
-                                <h2>Adjust Your Treatment Plan</h2>
-                                <ul>
-                                    <li>If you take insulin, lower your dose before exercise if needed.</li>
-                                    <li>Monitor blood sugar closely after intense activity, as low levels can occur hours later.</li>
-                                    <li>Consult your healthcare professional for advice on adjusting your medication.</li>
-                                </ul>
-
+                                                        <ul>
+                                                            <li>Stop smoking.</li>
+                                                            <li>Sit less and move more. Try to be physically active every day. </li>
+                                                            <li>Aim for healthy weight </li>
+                                                        </ul>
 
                                                 </div>
                                             </div>

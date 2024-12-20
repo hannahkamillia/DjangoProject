@@ -43,6 +43,39 @@ def breast(request):
 def kidney(request):
     return render(request, 'kidney.html')
 
+def DiabetesTreat(request):
+    return render(request, 'DiabetesTreat.html')
+
+def HeartTreat(request):
+    return render(request, 'HeartTreat.html')
+
+def BreastTreat(request):
+    return render(request, 'BreastTreat.html')
+
+def KidneyTreat(request):
+    return render(request, 'KidneyTreat.html')
+
+def NegativeDiabetes(request):
+    return render(request, 'NegativeDiabetes.html')
+
+def PositiveDiabetes(request):
+    return render(request, 'PositiveDiabetes.html')
+
+def NegativeCKD(request):
+    return render(request, 'NegativeCKD.html')
+
+def PositiveCKD(request):
+    return render(request, 'PositiveCKD.html')
+
+def NegativeHeart(request):
+    return render(request, 'NegativeHeart.html')
+
+def PositiveHeart(request):
+    return render(request, 'PositiveHeart.html')
+
+def ResultBenign(request):
+    return render(request, 'ResultBenign.html')
+
 #!Read the data from the diabetes dataset
 def diabetes_result(request):
     data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\diabetes.csv")
@@ -77,9 +110,9 @@ def diabetes_result(request):
 #!Decide to show the outcome
     result1 = ""
     if pred==[1]:
-      return render(request, "positive.html", {"result2": result1})  
+      return render(request, "NegativeDiabetes.html", {"result2": result1})  
     else:
-        return render(request, "negative.html", {"result2": result1})
+        return render(request, "PositiveDiabetes.html", {"result2": result1})
 
     #!return render(request, "predict.html", {"result2": result1})
 
@@ -127,9 +160,9 @@ def heart_result(request):
 
     # Decide the outcome and render the appropriate template
     if pred == [1]:
-        return render(request, "positive.html", {"result2": "Positive for Heart Disease"})  
+        return render(request, "PositiveHeart.html", {"result2": "Positive for Heart Disease"})  
     else:
-        return render(request, "negative.html", {"result2": "Negative for Heart Disease"})
+        return render(request, "NegativeHeart.html", {"result2": "Negative for Heart Disease"})
 
 #!Breast Model
 def breast_result(request):
@@ -172,11 +205,11 @@ def breast_result(request):
     if pred == [1]:
         return render(request, "malignant.html", {"result2": "Malignant tumor potential"})  
     else:
-        return render(request, "negative.html", {"result2": "Negative for Heart Disease"})
+        return render(request, "ResultBenign.html", {"result2": "Negative for Heart Disease"})
 
 #Kidney Logistic Regression
 def kidney_result(request):
-    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\kidney_disease.csv")
+    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\kidney_disease.csv")
 
     # Drop ID column
     data = data.drop(columns=["id"], errors='ignore')
@@ -258,6 +291,6 @@ def kidney_result(request):
 
     # Render the result
     if pred == 0:
-        return render(request, "positive.html")
+        return render(request, "NegativeCKD.html")
     else:
-        return render(request, "negative.html")
+        return render(request, "PositiveCKD.html")
