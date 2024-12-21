@@ -51,6 +51,33 @@
             cursor: pointer;
             margin: 20px;
         }
+
+        .tooltip {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            color: green;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 
 </head>
@@ -70,11 +97,17 @@
             <table>
                 <tr>
                     <td align = "right">No. of Pregnencies: </td>
-                    <td align = "left"><input type="text" name="n1"></td>
+                    <td align = "left"><input type="text" name="n1">
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The total number of pregnancies a woman has had.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align = "right">Glucose: </td>
-                    <td align = "left"><input type="text" name="n2" placeholder="mg/dL"></td>
+                    <td align = "left"><input type="text" name="n2" placeholder="mg/dL">
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The level of glucose (sugar) in the blood.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align = "right">Blood Pressure: </td>
@@ -82,19 +115,31 @@
                 </tr>
                 <tr>
                     <td align = "right">Skin Thickness: </td>
-                    <td align = "left"><input type="text" name="n4" placeholder="mm"></td>
+                    <td align = "left"><input type="text" name="n4" placeholder="mm">
+                        <span class="tooltip">?
+                            <span class="tooltiptext">Measured at the back of the arm.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align = "right">Insulin Level: </td>
-                    <td align = "left"><input type="text" name="n5" placeholder="IU/mL"></td>
+                    <td align = "left"><input type="text" name="n5" placeholder="IU/mL">
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The amount of insulin in the blood.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align = "right">Body Mass Index: </td>
-                    <td align = "left"><input type="text" name="n6" placeholder="kg/m"></td>
+                    <td align = "left"><input type="text" name="n6" placeholder="kg/m">
+                        <span class="tooltip">?
+                            <span class="tooltiptext">A measure of body fat based on weight and height (weight(kg)/height(m)^2).</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align = "right">Diabetes Pedigree Function: </td>
-                    <td align = "left"><input type="text" name="n7"></td>
+                    <td align = "left"><input type="text" name="n7" min="0">
+                        <span class="tooltip">?
+                            <span class="tooltiptext">A score that reflects the genetic predisposition to diabetes, based on the family history of the disease.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align = "right">Age: </td>

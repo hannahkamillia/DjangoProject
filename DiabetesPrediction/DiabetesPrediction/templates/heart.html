@@ -65,6 +65,33 @@
             cursor: pointer;
             margin: 20px;
         }
+
+        .tooltip {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            color: green;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 
 </head>
@@ -146,7 +173,10 @@
                 <input type="text" id="chest" name="chest" placeholder="Rate your chest pain" required--><br>
                 <tr>
                     <td align = "right">Chest Pain Type (1-4): </td>
-                    <td align = "left"><input type="text" id="chest" name="chest" placeholder="Rate your chest pain" required></td>
+                    <td align = "left"><input type="text" id="chest" name="chest" placeholder="Rate your chest pain" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">Discomfort or pain in the chest area.</span>
+                        </span></td>
                 </tr>
                 <!--<select name="cp" id="cp" required>
                     <option value="">Rate Chest Pain</option>
@@ -162,14 +192,20 @@
                 <input type="number" id="trestbps" name="trestbps" placeholder="Resting blood pressure (in mm Hg)" required><br-->
                 <tr>
                     <td align = "right">Resting Blood Pressure: </td>
-                    <td align = "left"><input type="number" id="trestbps" name="trestbps" placeholder="Resting blood pressure (in mm Hg)" required></td>
+                    <td align = "left"><input type="number" id="trestbps" name="trestbps" placeholder="Resting blood pressure (in mm Hg)" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The blood pressure measured when at rest.</span>
+                        </span></td>
                 </tr>
 
                 <!--label for="chol">Cholesterol Level</label>
                 <input type="number" id="chol" name="chol" placeholder="Cholesterol level (mg/dL)" required><br-->
                 <tr>
                     <td align = "right">Cholestrol Level: </td>
-                    <td align = "left"><input type="number" id="chol" name="chol" placeholder="Cholesterol level (mg/dL)" required></td>
+                    <td align = "left"><input type="number" id="chol" name="chol" placeholder="Cholesterol level (mg/dL)" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The amount of cholesterol in the blood.</span>
+                        </span></td>
                 </tr>
                 <tr> 
                 <td align ="right">Is your Fasting Blood Sugar (>120 mg/dL)?</td>
@@ -179,43 +215,67 @@
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </select>
+                    <span class="tooltip">?
+                        <span class="tooltiptext">The blood sugar level after fasting for 8 hours.</span>
+                    </span>
                 </td>
                 </tr>
 
                 <tr> 
                     <td align ="right">Resting Electrocardiographic Results (0-2)</td>
-                    <td align ="left"><input type="number" id="restecg" name="restecg" placeholder="Resting ECG results" min="0" max="2" required></td>
+                    <td align ="left"><input type="number" id="restecg" name="restecg" placeholder="Resting ECG results" min="0" max="2" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">An ECG measures the heart's electrical activity.</span>
+                        </span></td>
                 </tr>
 
                 <tr> 
                     <td align ="right">Maximum Heart Rate Achieved</td>
-                    <td align ="left"><input type="number" id="thalach" name="thalach" placeholder="Maximum heart rate achieved" required></td>
+                    <td align ="left"><input type="number" id="thalach" name="thalach" placeholder="Maximum heart rate achieved" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The highest heart rate reached during exercise.</span>
+                        </span></td>
                 </tr>
                 <tr>
 
                 </tr>
                 <td align ="right">Exercise-Induced Angina (0 = no, 1 = yes)</td>
-                <td align ="left"><input type="number" id="exang" name="exang" placeholder="Exercise-induced angina" required></td>
+                <td align ="left"><input type="number" id="exang" name="exang" placeholder="Exercise-induced angina" required>
+                    <span class="tooltip">?
+                        <span class="tooltiptext">Chest pain that occurs during exercise.</span>
+                    </span></td>
                 </tr>
                 
                 <tr> 
                     <td align ="right">ST Depression Induced by Exercise</td>
-                    <td align ="left"><input type="number" id="oldpeak" name="oldpeak" placeholder="ST depression induced by exercise" required></td>
+                    <td align ="left"><input type="number" id="oldpeak" name="oldpeak" placeholder="ST depression induced by exercise" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">A downward deflection in the ST segment of an electrographic (ECG) during exercise.</span>
+                        </span></td>
                 </tr>
     
                 <tr>
                 <td align ="right">Slope of the Peak Exercise ST Segment (0-2)</td>
-                <td align ="left"><input type="number" id="slope" name="slope" placeholder="Slope of peak exercise ST segment" required></td>
+                <td align ="left"><input type="number" id="slope" name="slope" placeholder="Slope of peak exercise ST segment" required>
+                    <span class="tooltip">?
+                        <span class="tooltiptext">The shape of the ST segment during exercise.</span>
+                    </span></td>
                 </tr>
 
                 <tr>
                 <td align ="right">Number of Major Vessels Colored by Fluoroscopy (0-4)</td>
-                <td align ="left"><input type="number" id="ca" name="ca" placeholder="Number of major vessels" required></td>
+                <td align ="left"><input type="number" id="ca" name="ca" placeholder="Number of major vessels" required>
+                    <span class="tooltip">?
+                        <span class="tooltiptext">A measure of the number of arteries with blockages as seen on an imaging test (angiography).</span>
+                    </span></td>
                 </tr>
 
                 <tr>
                 <td align ="right">Thalassemia (1 = normal, 2 = fixed defect, 3 = reversible defect)</td>
-                <td align ="left"><input type="number" id="thal" name="thal" placeholder="Thalassemia type" required></td>
+                <td align ="left"><input type="number" id="thal" name="thal" placeholder="Thalassemia type" required>
+                    <span class="tooltip">?
+                        <span class="tooltiptext">A genetic blood disorder that can cause anemia.</span>
+                    </span></td>
                 </tr>
             </table>
                 <input type="submit" value="Predict">

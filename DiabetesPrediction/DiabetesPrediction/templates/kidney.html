@@ -65,6 +65,33 @@
             cursor: pointer;
             margin: 20px;
         }
+
+        .tooltip {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            color: green;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 
 </head>
@@ -92,15 +119,26 @@
                 </tr>
                 <tr>
                     <td align="right">Specific Gravity: </td>
-                    <td align="left"><input type="text" name="n3" placeholder="e.g., 1.020" required></td>
+                    <td align="left"><input type="text" name="n3" placeholder="e.g., 1.020" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">Specific gravity in urine refers to the concentration of solutes.</span>
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <td align="right">Albumin: </td>
-                    <td align="left"><input type="text" name="n4" placeholder="g/dL" required min="0" max="4"></td>
+                    <td align="left"><input type="text" name="n4" placeholder="g/dL" required min="0" max="4">
+                        <span class="tooltip">?
+                            <span class="tooltiptext">A protein found in the blood.</span>
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <td align="right">Sugar Levels: </td>
-                    <td align="left"><input type="text" name="n5" placeholder="g/dL" required min="0" max="5"></td>
+                    <td align="left"><input type="text" name="n5" placeholder="g/dL" required min="0" max="5">
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The amount of glucose in the blood.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Red Blood Cells: </td>
@@ -108,7 +146,10 @@
                         <select name="n6" id="n6" placeholder="Choose" required>
                             <option value="1">Normal</option>
                             <option value="0">abnormal</option>
-                          </select></td>
+                          </select>
+                          <span class="tooltip">?
+                            <span class="tooltiptext">Cells in the blood that carry oxygen.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Pus Cells: </td>
@@ -116,7 +157,10 @@
                         <select name="n7" id="n7" placeholder="Choose" required>
                             <option value="1">Normal</option>
                             <option value="0">abnormal</option>
-                          </select></td>
+                          </select>
+                          <span class="tooltip">?
+                            <span class="tooltiptext">White blood cells in urine.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Pus Cell Clumps: </td>
@@ -124,7 +168,10 @@
                         <select name="n8" id="n8" placeholder="Choose" required>
                             <option value="1">Present</option>
                             <option value="0">Not Present</option>
-                          </select></td>
+                          </select>
+                          <span class="tooltip">?
+                            <span class="tooltiptext">Clusters of white blood cells in urine.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Bacteria in urine: </td>
@@ -132,43 +179,73 @@
                         <select name="n9" id="n9" required>
                             <option value="1">Present</option>
                             <option value="0">Not Present</option>
-                          </select></td>
+                          </select>
+                          <span class="tooltip">?
+                            <span class="tooltiptext">The presence of bacteria in urine.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Blood Glucose Random: </td>
-                    <td align="left"><input type="text" name="n10" placeholder="g/dL" required min="0"></td>
+                    <td align="left"><input type="text" name="n10" placeholder="g/dL" required min="0">
+                        <span class="tooltip">?
+                            <span class="tooltiptext">A measurement of blood sugar at any time of the day.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Blood Urea Levels: </td>
-                    <td align="left"><input type="text" name="n11" placeholder="mg/dL" min="0" required></td>
+                    <td align="left"><input type="text" name="n11" placeholder="mg/dL" min="0" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The amount of urea in the blood.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Serum Creatinine: </td>
-                    <td align="left"><input type="text" name="n12" placeholder="mg/dL" min="0" required></td>
+                    <td align="left"><input type="text" name="n12" placeholder="mg/dL" min="0" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The amount of waste product in the blood.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Sodium Levels: </td>
-                    <td align="left"><input type="text" name="n13" placeholder="mEq/dL" min="0" required></td>
+                    <td align="left"><input type="text" name="n13" placeholder="mEq/dL" min="0" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The amount of sodium in the blood.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Potassium Levels: </td>
-                    <td align="left"><input type="text" name="n14" placeholder="mEq/dL" min="0" required></td>
+                    <td align="left"><input type="text" name="n14" placeholder="mEq/dL" min="0" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The amount of potassium in the blood.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Hemoglobin: </td>
-                    <td align="left"><input type="text" name="n15" placeholder="g/dL" min="0" required></td>
+                    <td align="left"><input type="text" name="n15" placeholder="g/dL" min="0" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The amount of protein in red blood cells that carries oxygen.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Packed Cell Volume: </td>
-                    <td align="left"><input type="text" name="n16" placeholder="Percentage" min="0" required></td>
+                    <td align="left"><input type="text" name="n16" placeholder="Percentage" min="0" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The proportion of blood made up of red blood cells.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">White Blood Cell Count: </td>
-                    <td align="left"><input type="text" name="n17" placeholder="per cubic mm" min="0" required></td>
+                    <td align="left"><input type="text" name="n17" placeholder="per cubic mm" min="0" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">A measure of the number of white blood cells in the blood.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Red Blood Cell Count: </td>
-                    <td align="left"><input type="text" name="n18" placeholder="millions per cubic mm" min="0" required></td>
+                    <td align="left"><input type="text" name="n18" placeholder="millions per cubic mm" min="0" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">A measure of the number of red blood cells in the blood.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Hypertension: </td>
@@ -192,7 +269,10 @@
                         <select name="n21" id="n21" placeholder="Choose" required>
                             <option value="1">Yes</option>
                             <option value="0">No</option>
-                          </select></td>
+                          </select>
+                          <span class="tooltip">?
+                            <span class="tooltiptext">A condition where the arteries of the heart are narrowed or blocked.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Appetite: </td>
@@ -200,7 +280,10 @@
                         <select name="n22" id="n22" placeholder="Choose" required>
                             <option value="1">Good</option>
                             <option value="0">Poor</option>
-                          </select></td>
+                          </select>
+                          <span class="tooltip">?
+                            <span class="tooltiptext">The desire to eat.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Pressence of Pedal Edema: </td>
@@ -208,7 +291,10 @@
                         <select name="n23" id="n23" placeholder="Choose" required>
                             <option value="1">Yes</option>
                             <option value="0">No</option>
-                          </select></td>
+                          </select>
+                          <span class="tooltip">?
+                            <span class="tooltiptext">Swelling in the feet or ankles.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align="right">Anemia: </td>
@@ -216,7 +302,10 @@
                         <select name="n24" id="n24" placeholder="Choose" required>
                             <option value="1">Yes</option>
                             <option value="0">No</option>
-                          </select></td>
+                          </select>
+                          <span class="tooltip">?
+                            <span class="tooltiptext">A condition where there are not enough red blood cells to carry oxygen.</span>
+                        </span></td>
                 </tr>
             </table>
             <input type="submit" value="Predict">
