@@ -93,6 +93,63 @@
             opacity: 1;
         }
     </style>
+   <script>
+    // Function to validate form inputs
+    function validateForm(event) {
+        // Get all input elements in the form
+        const inputs = document.querySelectorAll("input[type='text']");
+        let allFilled = true;
+
+        // Check if any input is empty
+        inputs.forEach(input => {
+            if (input.value.trim() === "") {
+                allFilled = false;
+                input.style.border = "2px solid red"; // Highlight empty fields
+            } else {
+                input.style.border = ""; // Reset border for filled fields
+            }
+        });
+
+        // If not all fields are filled, show custom notification and prevent form submission
+        if (!allFilled) {
+            showCustomNotification("Please fill in the symptoms!");
+            event.preventDefault(); // Prevent form submission
+        }
+    }
+
+    // Function to show a custom notification
+    function showCustomNotification(message) {
+        const notification = document.createElement("div");
+        notification.innerText = message;
+        notification.style.position = "fixed";
+        notification.style.top = "20px";
+        notification.style.left = "50%";
+        notification.style.transform = "translateX(-50%)";
+        notification.style.backgroundColor = "#f44336"; // Red color for error
+        notification.style.color = "white";
+        notification.style.padding = "15px";
+        notification.style.borderRadius = "5px";
+        notification.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
+        notification.style.zIndex = "1000";
+        notification.style.fontFamily = "Arial, sans-serif";
+        notification.style.fontSize = "16px";
+
+        // Append notification to the body
+        document.body.appendChild(notification);
+
+        // Automatically remove the notification after 3 seconds
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 3000);
+    }
+
+    // Attach the validateForm function to the form's submit event
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", validateForm);
+    });
+</script>
+
 
 </head>
 <body>
