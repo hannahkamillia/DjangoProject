@@ -181,13 +181,27 @@
                 <input type="text" id="sex" name="sex" placeholder="Enter your gender (0 for female, 1 for male)" required--><br>
                 <tr>
                     <td align = "right">Sex: </td>
-                    <td align = "left"><input type="text" id="sex" name="sex" placeholder="Enter your gender (0 for female, 1 for male)" required></td>
+                    <td align = "left">
+                        <!--input type="text" id="sex" name="sex" placeholder="Enter your gender (0 for female, 1 for male)" required-->
+                        <select name="sex" id="sex" required>
+                            <option value="" selected disabled class="default-option">Select</option>
+                            <option value="1">Male</option>
+                            <option value="0">Female</option>
+                          </select></td>
                 </tr>
                 <!--label for="cp" input type="number">Chest Pain Type (1-4)</label>
                 <input type="text" id="chest" name="chest" placeholder="Rate your chest pain" required--><br>
                 <tr>
-                    <td align = "right">Chest Pain Type (1-4): </td>
-                    <td align = "left"><input type="text" id="chest" name="chest" placeholder="Rate your chest pain" required>
+                    <td align = "right">Chest Pain Type: </td>
+                    <td align = "left">
+                        <!--input type="text" id="chest" name="chest" placeholder="Rate your chest pain" required-->
+                        <select name="chest" id="chest" required>
+                            <option value="" selected disabled class="default-option">Select</option>
+                            <option value="1">Mild Discomfort</option>
+                            <option value="2">Moderate Pain</option>
+                            <option value="3">Severe Pain</option>
+                            <option value="2">Critical Condition</option>
+                          </select>
                         <span class="tooltip">?
                             <span class="tooltiptext">Discomfort or pain in the chest area.</span>
                         </span></td>
@@ -206,7 +220,7 @@
                 <input type="number" id="trestbps" name="trestbps" placeholder="Resting blood pressure (in mm Hg)" required><br-->
                 <tr>
                     <td align = "right">Resting Blood Pressure: </td>
-                    <td align = "left"><input type="number" id="trestbps" name="trestbps" placeholder="Resting blood pressure (in mm Hg)" required>
+                    <td align = "left"><input type="number" id="trestbps" name="trestbps" placeholder="in mm Hg" required>
                         <span class="tooltip">?
                             <span class="tooltiptext">The blood pressure measured when at rest.</span>
                         </span></td>
@@ -216,7 +230,7 @@
                 <input type="number" id="chol" name="chol" placeholder="Cholesterol level (mg/dL)" required><br-->
                 <tr>
                     <td align = "right">Cholestrol Level: </td>
-                    <td align = "left"><input type="number" id="chol" name="chol" placeholder="Cholesterol level (mg/dL)" required>
+                    <td align = "left"><input type="number" id="chol" name="chol" placeholder="in mg/dL" required>
                         <span class="tooltip">?
                             <span class="tooltiptext">The amount of cholesterol in the blood.</span>
                         </span></td>
@@ -226,6 +240,7 @@
                 <td align ="left">
                     <!--input type="number" id="fbs" name="fbs" placeholder="Fasting blood sugar" required-->
                     <select name="fbs" id="fbs" placeholder="Insert FBS">
+                        <option value="" selected disabled class="default-option">Select</option>
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </select>
@@ -236,15 +251,22 @@
                 </tr>
 
                 <tr> 
-                    <td align ="right">Resting Electrocardiographic Results (0-2)</td>
-                    <td align ="left"><input type="number" id="restecg" name="restecg" placeholder="Resting ECG results" min="0" max="2" required>
+                    <td align ="right">Resting Electrocardiographic Results:</td>
+                    <td align ="left">
+                        <!--input type="number" id="restecg" name="restecg" placeholder="Resting ECG results" min="0" max="2" required-->
+                        <select name="restecg" id="restecg" required>
+                            <option value="" selected disabled class="default-option">Select</option>
+                            <option value="0">Normal</option>
+                            <option value="1">Minor Changes</option>
+                            <option value="2">Noticable Changes</option>
+                        </select>
                         <span class="tooltip">?
                             <span class="tooltiptext">An ECG measures the heart's electrical activity.</span>
                         </span></td>
                 </tr>
 
                 <tr> 
-                    <td align ="right">Maximum Heart Rate Achieved</td>
+                    <td align ="right">Maximum Heart Rate Achieved:</td>
                     <td align ="left"><input type="number" id="thalach" name="thalach" placeholder="Maximum heart rate achieved" required>
                         <span class="tooltip">?
                             <span class="tooltiptext">The highest heart rate reached during exercise.</span>
@@ -253,15 +275,21 @@
                 <tr>
 
                 </tr>
-                <td align ="right">Exercise-Induced Angina (0 = no, 1 = yes)</td>
-                <td align ="left"><input type="number" id="exang" name="exang" placeholder="Exercise-induced angina" required>
+                <td align ="right">Exercise-Induced Angina:</td>
+                <td align ="left">
+                    <!--input type="number" id="exang" name="exang" placeholder="Exercise-induced angina" required-->
+                    <select name="exang" id="exang" required>
+                        <option value="" selected disabled class="default-option">Select</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
                     <span class="tooltip">?
                         <span class="tooltiptext">Chest pain that occurs during exercise.</span>
                     </span></td>
                 </tr>
                 
                 <tr> 
-                    <td align ="right">ST Depression Induced by Exercise</td>
+                    <td align ="right">ST Depression Induced by Exercise:</td>
                     <td align ="left"><input type="number" id="oldpeak" name="oldpeak" placeholder="ST depression induced by exercise" required>
                         <span class="tooltip">?
                             <span class="tooltiptext">A downward deflection in the ST segment of an electrographic (ECG) during exercise.</span>
@@ -269,26 +297,48 @@
                 </tr>
     
                 <tr>
-                <td align ="right">Slope of the Peak Exercise ST Segment (0-2)</td>
-                <td align ="left"><input type="number" id="slope" name="slope" placeholder="Slope of peak exercise ST segment" required>
+                <td align ="right">Slope of the Peak Exercise ST Segment:</td>
+                <td align ="left">
+                    <!--input type="number" id="slope" name="slope" placeholder="Slope of peak exercise ST segment" required-->
+                    <select name="slope" id="slope" required>
+                        <option value="" selected disabled class="default-option">Select</option>
+                        <option value="0">Normal</option>
+                        <option value="1">Slightly rises or falls</option>
+                        <option value="2">Significantly rises or falls</option>
+                    </select>
                     <span class="tooltip">?
                         <span class="tooltiptext">The shape of the ST segment during exercise.</span>
                     </span></td>
                 </tr>
 
                 <tr>
-                <td align ="right">Number of Major Vessels Colored by Fluoroscopy (0-4)</td>
-                <td align ="left"><input type="number" id="ca" name="ca" placeholder="Number of major vessels" required>
+                <td align ="right">Number of Major Vessels Colored by Fluoroscopy:</td>
+                <td align ="left">
+                    <!--input type="number" id="ca" name="ca" placeholder="Number of major vessels" required-->
+                    <select name="ca" id="ca" required>
+                        <option value="" selected disabled class="default-option">Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
                     <span class="tooltip">?
-                        <span class="tooltiptext">A measure of the number of arteries with blockages as seen on an imaging test (angiography).</span>
+                        <span class="tooltiptext">Number of arteries with blockages as seen on an imaging test (angiography).</span>
                     </span></td>
                 </tr>
 
                 <tr>
-                <td align ="right">Thalassemia (1 = normal, 2 = fixed defect, 3 = reversible defect)</td>
-                <td align ="left"><input type="number" id="thal" name="thal" placeholder="Thalassemia type" required>
+                <td align ="right">Thallium:</td>
+                <td align ="left">
+                    <!--input type="number" id="thal" name="thal" placeholder="Thalassemia type" required-->
+                    <select name="thal" id="thal" required>
+                        <option value="" selected disabled class="default-option">Select</option>
+                        <option value="3">Normal Perfusion</option>
+                        <option value="6">Fixed Defect</option>
+                        <option value="7">Reversible Defect</option>
+                    </select>
                     <span class="tooltip">?
-                        <span class="tooltiptext">A genetic blood disorder that can cause anemia.</span>
+                        <span class="tooltiptext">Thallium results refers to Thallium Stress Test, a nuclear imaging test that shows how well blood flows into the heart muscle at rest and during activity.</span>
                     </span></td>
                 </tr>
             </table>

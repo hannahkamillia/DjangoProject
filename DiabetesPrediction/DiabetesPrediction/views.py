@@ -78,7 +78,7 @@ def ResultBenign(request):
 
 #!Read the data from the diabetes dataset
 def diabetes_result(request):
-    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\diabetes.csv")
+    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\diabetes\diabetes.csv")
 
 #!Train test split
     X = data.drop("Outcome", axis=1)
@@ -160,7 +160,7 @@ def heart_result(request):
 
     # Decide the outcome and render the appropriate template
     if pred == [1]:
-        return render(request, "PositiveHeart.html", {"result2": "Positive for Heart Disease"})  
+        return render(request, "PositiveHeart.html", {"result2": "Positive for Heart Disease"})
     else:
         return render(request, "NegativeHeart.html", {"result2": "Negative for Heart Disease"})
 
@@ -168,7 +168,7 @@ def heart_result(request):
 def breast_result(request):
 
 #load data breast dataset
-    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\Breast_cancer_data.csv")
+    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\Breast_cancer_data.csv")
 
  # Prepare features (X) and target (y)
     X = data.drop(columns=['diagnosis'])  # Drop the 'diagnosis' column for input features
@@ -209,7 +209,7 @@ def breast_result(request):
 
 #Kidney Logistic Regression
 def kidney_result(request):
-    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\kidney_disease.csv")
+    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\kidney_disease.csv")
 
     # Drop ID column
     data = data.drop(columns=["id"], errors='ignore')

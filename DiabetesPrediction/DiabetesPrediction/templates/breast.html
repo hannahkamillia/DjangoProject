@@ -174,7 +174,7 @@
                 <!--label for="age">Age</label>
                 <input type="number" id="age" name="age" placeholder="Enter your age" required -->
                 <tr>
-                    <td align = "right">Average Radius of Tumor (in mm): </td>
+                    <td align = "right">Average Radius of Tumor: </td>
                     <td align = "left"><input type="text" id="avgtum" name="avgtum" min="0" placeholder="in mm" required>
                         <span class="tooltip">?
                             <span class="tooltiptext">The average distance from the center to the edge of the tumor.</span>
@@ -199,7 +199,7 @@
                 <!--label for="trestbps">Resting Blood Pressure</label>
                 <input type="number" id="trestbps" name="trestbps" placeholder="Resting blood pressure (in mm Hg)" required><br-->
                 <tr>
-                    <td align = "right">Average Perimeter of Tumor (in mm): </td>
+                    <td align = "right">Average Perimeter of Tumor: </td>
                     <td align = "left"><input type="text" id="peri" name="peri" placeholder="in mm" required>
                         <span class="tooltip">?
                             <span class="tooltiptext">The total length around the tumor.</span>
@@ -218,7 +218,8 @@
 
                 <tr>
                     <td align = "right">Average Smoothness (0-1 scale): </td>
-                    <td align = "left"><input type="text" id="smooth" name="smooth" placeholder="number of positive lymph nodes" required>
+                    <td align = "left">
+                        <input type="text" id="smooth" name="smooth" placeholder="number of positive lymph nodes" min="0" max="1" required>
                         <span class="tooltip">?
                             <span class="tooltiptext">The level of smoothness of the tumor’s surface.</span>
                         </span></td>
