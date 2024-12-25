@@ -116,26 +116,37 @@ def diabetes_result(request):
 
     #!return render(request, "predict.html", {"result2": result1})
 
-#!Heart Model
+#!Heart Model-------------------------------------------------------
+
 def heart_result(request):
     # Load the heart disease dataset
-    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\Heart_Disease_Prediction.csv")
+    data = pd.read_csv("C:\\Users\\Hannah Kamillia\\Downloads\\Heart_Disease_Prediction.csv")
 
-    # Prepare features (X) and target (y)
-    X = data.drop(columns=['Heart Disease'])  
-    y = data['Heart Disease']  
+    # Check for missing values
+    print(data.isnull().sum())
+
+    # Convert categorical variables to numerical
+    data['Sex'] = data['Sex'].map({0: 0, 1: 1})  # Already numerical
+    data['Heart Disease'] = data['Heart Disease'].map({'Absence': 0, 'Presence': 1})
+
+    # Select features and target variable
+    X = data.drop('Heart Disease', axis=1)
+    y = data['Heart Disease']
 
     # Split into train and test sets
+    # Split the dataset into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     # Scale the features
     scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
+    X_train = scaler.fit_transform(X_train)
+    X_test = scaler.transform(X_test)
 
     # Initialize and train the logistic regression model
-    logistic_model = LogisticRegression(random_state=42)
-    logistic_model.fit(X_train_scaled, y_train)  # You need to fit the model before making predictions
+    heart_model = RandomForestClassifier(n_estimators=100, random_state=42)
+
+    # Train the model
+    heart_model.fit(X_train, y_train)
 
     # Get user input from the request
     val1 = float(request.GET['age'])
@@ -156,36 +167,38 @@ def heart_result(request):
     input_data = scaler.transform([[val1, val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12, val13]])
 
     # Make a prediction
-    pred = logistic_model.predict(input_data)
+    pred = heart_model.predict(input_data)
 
     # Decide the outcome and render the appropriate template
     if pred == [1]:
-        return render(request, "PositiveHeart.html", {"result2": "Positive for Heart Disease"})
+        return render(request, "PositiveHeart.html", {"result2": "Positive for Heart Disease"})  
     else:
         return render(request, "NegativeHeart.html", {"result2": "Negative for Heart Disease"})
+    
 
-#!Breast Model
+
+#!BREAST MODEL------------------------------------------
 def breast_result(request):
 
 #load data breast dataset
-    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\Breast_cancer_data.csv")
+    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\Breast_cancer_data.csv")
+    data.dropna(inplace=True)  # Remove rows with missing values
 
- # Prepare features (X) and target (y)
-    X = data.drop(columns=['diagnosis'])  # Drop the 'diagnosis' column for input features
-    y = data['diagnosis']  # 'diagnosis' column is the target variable
+    # Features and target variable
+    X = data.drop('diagnosis', axis=1)
+    y = data['diagnosis']
 
-
-# Split the dataset into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
-
- # Scale the features
+    # Normalize the features
     scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test) 
+    X_scaled = scaler.fit_transform(X)
 
-# Initialize and train the Logistic Regression model
-    breast_model = LogisticRegression(random_state=42, max_iter=1000)
+    # Split the data
+    X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+    
+    # Train the model
+    breast_model = RandomForestClassifier(n_estimators=100, random_state=42)
     breast_model.fit(X_train, y_train)
+
 
     
  # Get user input from the request
