@@ -119,7 +119,7 @@ def diabetes_result(request):
 #!Heart Model-------------------------------------------------------
 def heart_result(request):
     # Load the heart disease dataset
-    data = pd.read_csv("C:\\Users\\Hannah Kamillia\\Downloads\\Heart_Disease_Prediction.csv")
+    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\Telegram Desktop\Heart_Disease_Prediction.csv")
 
     # Check for missing values
     print(data.isnull().sum())
@@ -181,7 +181,7 @@ def heart_result(request):
 def breast_result(request):
 
 #load data breast dataset
-    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\Breast_cancer_data.csv")
+    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\Breast_cancer_data.csv")
     data.dropna(inplace=True)  # Remove rows with missing values
 
     # Features and target variable
@@ -222,7 +222,7 @@ def breast_result(request):
 
 #Kidney Logistic Regression
 def kidney_result(request):
-    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\kidney_disease.csv")
+    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\kidney_disease.csv")
 
     # Drop ID column
     data = data.drop(columns=["id"], errors='ignore')
