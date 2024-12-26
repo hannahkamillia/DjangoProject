@@ -1,12 +1,12 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Heart Disease Predictor</title>
     <style>
-        body{
-            background-image:url("{% static '\diabetespredict\images\background.jpg'%}");
+        body {
+            background-image: url("{% static 'diabetespredict/images/background.jpg' %}");
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -29,43 +29,95 @@
         h1 {
             text-align: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 40px;
+            font-size: 30px;
             color: black;
         }
-        input[type=text] {
+        .container {
+            width: 60%;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        input[type="text"], input[type="number"], select {
             padding: 12px 12px;
             margin: 2px;
             box-sizing: border-box;
             border-radius: 15px;
             box-shadow: 2px 2px gray;
         }
-        input[type=number] {
-            padding: 12px 12px;
-            margin: 2px;
-            box-sizing: border-box;
-            border-radius: 15px;
-            box-shadow: 2px 2px gray;
-        }
-        select {
-            padding: 12px 12px;
-            margin: 2px;
-            box-sizing: border-box;
-            border-radius: 15px;
-            box-shadow: 2px 2px gray;
-        }
-      
-        input[type=submit] {
+        input[type="submit"] {
             background-color: green;
-            border: 2px;
-            color: #ffff;
+            color: #fff;
             border-radius: 10px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-weight: bold;
-            padding: 8px 18px;
+            padding: 10px 20px;
             cursor: pointer;
-            margin: 20px;
+            margin-top: 20px;
         }
-
+        .next {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .prev {
+            background-color: grey;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .progress {
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 20px;
+            width: 0;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+        .step-title {
+            font-weight: bold;
+            font-size: 20px;
+            margin: 10px 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            text-align: center;
+            background: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         .tooltip {
             display: inline-block;
             position: relative;
@@ -75,278 +127,246 @@
         .tooltip .tooltiptext {
             visibility: hidden;
             width: 200px;
-            background-color: black;
+            background-color: #6c757d;
             color: #fff;
             text-align: center;
             border-radius: 5px;
             padding: 5px;
             position: absolute;
             z-index: 1;
-            bottom: 125%;
+            bottom: 100%;
             left: 50%;
             margin-left: -100px;
-            opacity: 0;
-            transition: opacity 0.3s;
         }
         .tooltip:hover .tooltiptext {
             visibility: visible;
-            opacity: 1;
         }
     </style>
-  <script>
-    // Function to validate form inputs
-    function validateForm(event) {
-        // Get all input elements in the form
-        const inputs = document.querySelectorAll("input[type='text']");
-        let allFilled = true;
+    <script>
+        let currentStep = 0;
 
-        // Check if any input is empty
-        inputs.forEach(input => {
-            if (input.value.trim() === "") {
-                allFilled = false;
-                input.style.border = "2px solid red"; // Highlight empty fields
-            } else {
-                input.style.border = ""; // Reset border for filled fields
-            }
-        });
+        function showStep(step) {
+            const steps = document.querySelectorAll(".step");
+            const progressBar = document.querySelector(".progress-bar");
+            steps.forEach((s, index) => {
+                s.classList.toggle("active", index === step);
+            });
+            const progressPercentage = ((step + 1) / steps.length) * 100;
+            progressBar.style.width = progressPercentage + "%";
 
-        // If not all fields are filled, show custom notification and prevent form submission
-        if (!allFilled) {
-            showCustomNotification("Please fill in the symptoms!");
-            event.preventDefault(); // Prevent form submission
+            // Update step numbers
+            const stepNumbers = document.querySelectorAll(".step-number");
+            stepNumbers.forEach((num, index) => {
+                num.style.opacity = index <= step ? 1 : 0.5;
+            });
         }
-    }
 
-    // Function to show a custom notification
-    function showCustomNotification(message) {
-        const notification = document.createElement("div");
-        notification.innerText = message;
-        notification.style.position = "fixed";
-        notification.style.top = "20px";
-        notification.style.left = "50%";
-        notification.style.transform = "translateX(-50%)";
-        notification.style.backgroundColor = "#f44336"; // Red color for error
-        notification.style.color = "white";
-        notification.style.padding = "15px";
-        notification.style.borderRadius = "5px";
-        notification.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
-        notification.style.zIndex = "1000";
-        notification.style.fontFamily = "Arial, sans-serif";
-        notification.style.fontSize = "16px";
+        function nextStep(event) {
+            event.preventDefault();
+            const inputs = document.querySelectorAll(`.step:nth-child(${currentStep + 1}) input, .step:nth-child(${currentStep + 1}) select`);
+            let allFilled = true;
 
-        // Append notification to the body
-        document.body.appendChild(notification);
+            inputs.forEach(input => {
+                if (input.value.trim() === "" || input.selectedIndex === 0) { // Handle both input and select elements
+                    allFilled = false;
+                    input.style.border = "2px solid red"; // Highlight empty fields
+                } else {
+                    input.style.border = ""; // Reset border for filled fields
+                }
+            });
 
-        // Automatically remove the notification after 3 seconds
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 3000);
-    }
+            if (allFilled) {
+                currentStep++;
+                if (currentStep < document.querySelectorAll(".step").length) {
+                    showStep(currentStep);
+                } else {
+                    document.querySelector("form").submit(); // Submit the form after final step
+                }
+            } else {
+                alert("Please fill in all fields!");
+            }
+        }
 
-    // Attach the validateForm function to the form's submit event
-    document.addEventListener("DOMContentLoaded", () => {
-        const form = document.querySelector("form");
-        form.addEventListener("submit", validateForm);
-    });
-</script>
+        function prevStep(event) {
+            event.preventDefault();
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
 
-
+        document.addEventListener("DOMContentLoaded", () => {
+            showStep(currentStep);
+            const nextButtons = document.querySelectorAll(".next");
+            const prevButtons = document.querySelectorAll(".prev");
+            nextButtons.forEach(button => {
+                button.addEventListener("click", nextStep);
+            });
+            prevButtons.forEach(button => {
+                button.addEventListener("click", prevStep);
+            });
+        });
+    </script>
 </head>
-<body> 
-    <div class = 'topnav'>
+<body>
+    <div class='topnav'>
         <ul>
             <a href="home">Home</a>
             <a href="predict">Diabetes</a>
             <a href="kidney">Kidney diseases</a>
             <a href="heart">Heart Disease</a>
             <a href="breast">Breast Cancer</a>
-          </ul>
-      </div>
-      
-      <div align = "center" class = "main">
-        <h1> Heart Disease Predictor</h1>
-      
+        </ul>
+    </div>
+    
+    <div align="center" class="main">
+        <h1>Heart Disease Predictor</h1>
 
         <div class="container">
-        
-            <form action="heart_result">
-                <table> 
-                <!--label for="age">Age</label>
-                <input type="number" id="age" name="age" placeholder="Enter your age" required -->
-                <tr>
-                    <td align = "right">Age: </td>
-                    <td align = "left"><input type="number" id="age" name="age" placeholder="Enter your age" required></td>
-                </tr>
-                <!--label for="sex">Sex</label>
-                <input type="text" id="sex" name="sex" placeholder="Enter your gender (0 for female, 1 for male)" required--><br>
-                <tr>
-                    <td align = "right">Sex: </td>
-                    <td align = "left">
-                        <!--input type="text" id="sex" name="sex" placeholder="Enter your gender (0 for female, 1 for male)" required-->
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+            <form action="{% url 'heart_result' %}" method="post">
+                {% csrf_token %}
+                
+                <!-- Step 1: Personal Information -->
+                <div class="step active">
+                    <div class="step-title"><span class="step-number">1</span>Step 1: Personal Information</div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" placeholder="Enter your age" required>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="sex">Sex:</label>
                         <select name="sex" id="sex" required>
-                            <option value="" selected disabled class="default-option">Select</option>
+                            <option value="" selected disabled>Select</option>
                             <option value="1">Male</option>
                             <option value="0">Female</option>
-                          </select></td>
-                </tr>
-                <!--label for="cp" input type="number">Chest Pain Type (1-4)</label>
-                <input type="text" id="chest" name="chest" placeholder="Rate your chest pain" required--><br>
-                <tr>
-                    <td align = "right">Chest Pain Type: </td>
-                    <td align = "left">
-                        <!--input type="text" id="chest" name="chest" placeholder="Rate your chest pain" required-->
+                        </select>
+                    </div>
+                    <button type="button" class="next">Next</button>
+                </div>
+
+                <!-- Step 2: Chest Pain and Blood Pressure -->
+                <div class="step">
+                    <div class="step-title"><span class="step-number">2</span>Step 2: Chest Pain and Blood Pressure</div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="chest">Chest Pain Type:</label>
                         <select name="chest" id="chest" required>
-                            <option value="" selected disabled class="default-option">Select</option>
+                            <option value="" selected disabled>Select</option>
                             <option value="1">Mild Discomfort</option>
                             <option value="2">Moderate Pain</option>
                             <option value="3">Severe Pain</option>
-                            <option value="2">Critical Condition</option>
-                          </select>
-                        <span class="tooltip">?
-                            <span class="tooltiptext">Discomfort or pain in the chest area.</span>
-                        </span></td>
-                </tr>
-                <!--<select name="cp" id="cp" required>
-                    <option value="">Rate Chest Pain</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                </select><br> -->
+                            <option value="4">Critical Condition</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="trestbps">Resting Blood Pressure:</label>
+                        <input type="number" id="trestbps" name="trestbps" placeholder="in mm Hg" required>
+                    </div>
+                    <button type="button" class="prev">Previous</button>
+                    <button type="button" class="next">Next</button>
+                </div>
 
-                <!--input type="number" id="cp" name="cp" placeholder="Chest pain type" min="0" max="3" required><br-->
-    
-                <!--label for="trestbps">Resting Blood Pressure</label>
-                <input type="number" id="trestbps" name="trestbps" placeholder="Resting blood pressure (in mm Hg)" required><br-->
-                <tr>
-                    <td align = "right">Resting Blood Pressure: </td>
-                    <td align = "left"><input type="number" id="trestbps" name="trestbps" placeholder="in mm Hg" required>
-                        <span class="tooltip">?
-                            <span class="tooltiptext">The blood pressure measured when at rest.</span>
-                        </span></td>
-                </tr>
+                <!-- Step 3: Cholesterol and Fasting Blood Sugar -->
+                <div class="step">
+                    <div class="step-title"><span class="step-number">3</span>Step 3: Cholesterol and Fasting Blood Sugar</div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="chol">Cholesterol Level:</label>
+                        <input type="number" id="chol" name="chol" placeholder="in mg/dL" required>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="fbs">Fasting Blood Sugar (>120 mg/dL):</label>
+                        <select name="fbs" id="fbs" required>
+                            <option value="" selected disabled>Select</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <button type="button" class="prev">Previous</button>
+                    <button type="button" class="next">Next</button>
+                </div>
 
-                <!--label for="chol">Cholesterol Level</label>
-                <input type="number" id="chol" name="chol" placeholder="Cholesterol level (mg/dL)" required><br-->
-                <tr>
-                    <td align = "right">Cholestrol Level: </td>
-                    <td align = "left"><input type="number" id="chol" name="chol" placeholder="in mg/dL" required>
-                        <span class="tooltip">?
-                            <span class="tooltiptext">The amount of cholesterol in the blood.</span>
-                        </span></td>
-                </tr>
-                <tr> 
-                <td align ="right">Is your Fasting Blood Sugar (>120 mg/dL)?</td>
-                <td align ="left">
-                    <!--input type="number" id="fbs" name="fbs" placeholder="Fasting blood sugar" required-->
-                    <select name="fbs" id="fbs" placeholder="Insert FBS">
-                        <option value="" selected disabled class="default-option">Select</option>
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                    </select>
-                    <span class="tooltip">?
-                        <span class="tooltiptext">The blood sugar level after fasting for 8 hours.</span>
-                    </span>
-                </td>
-                </tr>
-
-                <tr> 
-                    <td align ="right">Resting Electrocardiographic Results:</td>
-                    <td align ="left">
-                        <!--input type="number" id="restecg" name="restecg" placeholder="Resting ECG results" min="0" max="2" required-->
+                <!-- Step 4: ECG and Heart Rate -->
+                <div class="step">
+                    <div class="step-title"><span class="step-number">4</span>Step 4: ECG and Heart Rate</div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="restecg">Resting Electrocardiographic Result:</label>
                         <select name="restecg" id="restecg" required>
-                            <option value="" selected disabled class="default-option">Select</option>
+                            <option value="" selected disabled>Select</option>
                             <option value="0">Normal</option>
-                            <option value="1">Minor Changes</option>
-                            <option value="2">Noticable Changes</option>
+                            <option value="1">Having ST-T wave abnormality</option>
+                            <option value="2">Showing probable or definite left ventricular hypertrophy</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="thalach">Maximum Heart Rate Achieved:</label>
+                        <input type="number" id="thalach" name="thalach" placeholder="in bpm" required>
+                    </div>
+                    <button type="button" class="prev">Previous</button>
+                    <button type="button" class="next">Next</button>
+                </div>
+
+                <!-- Step 5: Exercise-Induced Angina and Other Fields -->
+                <div class="step">
+                    <div class="step-title"><span class="step-number">5</span>Step 5: Exercise-Induced Angina and Other Fields</div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="exang">Exercise-Induced Angina:</label>
+                        <select name="exang" id="exang" required>
+                            <option value="" selected disabled class="default-option">Select</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
                         </select>
                         <span class="tooltip">?
-                            <span class="tooltiptext">An ECG measures the heart's electrical activity.</span>
-                        </span></td>
-                </tr>
-
-                <tr> 
-                    <td align ="right">Maximum Heart Rate Achieved:</td>
-                    <td align ="left"><input type="number" id="thalach" name="thalach" placeholder="Maximum heart rate achieved" required>
+                            <span class="tooltiptext">Chest pain that occurs during exercise.</span>
+                        </span>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="oldpeak">ST Depression Induced by Exercise:</label>
+                        <input type="number" id="oldpeak" name="oldpeak" placeholder="ST depression induced by exercise" required>
                         <span class="tooltip">?
-                            <span class="tooltiptext">The highest heart rate reached during exercise.</span>
-                        </span></td>
-                </tr>
-                <tr>
-
-                </tr>
-                <td align ="right">Exercise-Induced Angina:</td>
-                <td align ="left">
-                    <!--input type="number" id="exang" name="exang" placeholder="Exercise-induced angina" required-->
-                    <select name="exang" id="exang" required>
-                        <option value="" selected disabled class="default-option">Select</option>
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                    </select>
-                    <span class="tooltip">?
-                        <span class="tooltiptext">Chest pain that occurs during exercise.</span>
-                    </span></td>
-                </tr>
-                
-                <tr> 
-                    <td align ="right">ST Depression Induced by Exercise:</td>
-                    <td align ="left"><input type="number" id="oldpeak" name="oldpeak" placeholder="ST depression induced by exercise" required>
+                            <span class="tooltiptext">A downward deflection in the ST segment of an electrocardiogram (ECG) during exercise.</span>
+                        </span>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="slope">Slope of the Peak Exercise ST Segment:</label>
+                        <select name="slope" id="slope" required>
+                            <option value="" selected disabled class="default-option">Select</option>
+                            <option value="0">Normal</option>
+                            <option value="1">Slightly rises or falls</option>
+                            <option value="2">Significantly rises or falls</option>
+                        </select>
                         <span class="tooltip">?
-                            <span class="tooltiptext">A downward deflection in the ST segment of an electrographic (ECG) during exercise.</span>
-                        </span></td>
-                </tr>
-    
-                <tr>
-                <td align ="right">Slope of the Peak Exercise ST Segment:</td>
-                <td align ="left">
-                    <!--input type="number" id="slope" name="slope" placeholder="Slope of peak exercise ST segment" required-->
-                    <select name="slope" id="slope" required>
-                        <option value="" selected disabled class="default-option">Select</option>
-                        <option value="0">Normal</option>
-                        <option value="1">Slightly rises or falls</option>
-                        <option value="2">Significantly rises or falls</option>
-                    </select>
-                    <span class="tooltip">?
-                        <span class="tooltiptext">The shape of the ST segment during exercise.</span>
-                    </span></td>
-                </tr>
-
-                <tr>
-                <td align ="right">Number of Major Vessels Colored by Fluoroscopy:</td>
-                <td align ="left">
-                    <!--input type="number" id="ca" name="ca" placeholder="Number of major vessels" required-->
-                    <select name="ca" id="ca" required>
-                        <option value="" selected disabled class="default-option">Select</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
-                    <span class="tooltip">?
-                        <span class="tooltiptext">Number of arteries with blockages as seen on an imaging test (angiography).</span>
-                    </span></td>
-                </tr>
-
-                <tr>
-                <td align ="right">Thallium:</td>
-                <td align ="left">
-                    <!--input type="number" id="thal" name="thal" placeholder="Thalassemia type" required-->
-                    <select name="thal" id="thal" required>
-                        <option value="" selected disabled class="default-option">Select</option>
-                        <option value="3">Normal Perfusion</option>
-                        <option value="6">Fixed Defect</option>
-                        <option value="7">Reversible Defect</option>
-                    </select>
-                    <span class="tooltip">?
-                        <span class="tooltiptext">Thallium results refers to Thallium Stress Test, a nuclear imaging test that shows how well blood flows into the heart muscle at rest and during activity.</span>
-                    </span></td>
-                </tr>
-            </table>
-                <input type="submit" value="Predict">
-           
+                            <span class="tooltiptext">The shape of the ST segment during exercise.</span>
+                        </span>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="ca">Number of Major Vessels Colored by Fluoroscopy:</label>
+                        <select name="ca" id="ca" required>
+                            <option value="" selected disabled class="default-option">Select</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">Number of arteries with blockages as seen on an imaging test (angiography).</span>
+                        </span>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="thal">Thallium:</label>
+                        <select name="thal" id="thal" required>
+                            <option value="" selected disabled class="default-option">Select</option>
+                            <option value="3">Normal Perfusion</option>
+                            <option value="6">Fixed Defect</option>
+                            <option value="7">Reversible Defect</option>
+                        </select>
+                    </div>
+                    <button type="button" class="prev">Previous</button>
+                    <button type="submit" class="next">Submit</button>
+                </div>
             </form>
         </div>
-        </div>
-    
+    </div>
 </body>
 </html>

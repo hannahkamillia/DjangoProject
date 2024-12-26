@@ -117,7 +117,6 @@ def diabetes_result(request):
     #!return render(request, "predict.html", {"result2": result1})
 
 #!Heart Model-------------------------------------------------------
-
 def heart_result(request):
     # Load the heart disease dataset
     data = pd.read_csv("C:\\Users\\Hannah Kamillia\\Downloads\\Heart_Disease_Prediction.csv")
@@ -133,7 +132,6 @@ def heart_result(request):
     X = data.drop('Heart Disease', axis=1)
     y = data['Heart Disease']
 
-    # Split into train and test sets
     # Split the dataset into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
@@ -148,34 +146,36 @@ def heart_result(request):
     # Train the model
     heart_model.fit(X_train, y_train)
 
-    # Get user input from the request
-    val1 = float(request.GET['age'])
-    val2 = float(request.GET['sex'])
-    val3 = float(request.GET['chest'])
-    val4 = float(request.GET['trestbps'])
-    val5 = float(request.GET['chol'])
-    val6 = float(request.GET['fbs'])
-    val7 = float(request.GET['restecg'])
-    val8 = float(request.GET['thalach'])
-    val9 = float(request.GET['exang'])
-    val10 = float(request.GET['oldpeak'])
-    val11 = float(request.GET['slope'])
-    val12 = float(request.GET['ca'])
-    val13 = float(request.GET['thal'])
+    if request.method == 'POST':
+        # Get user input from the request using POST
+        val1 = float(request.POST.get('age', 0))
+        val2 = float(request.POST.get('sex', 0))
+        val3 = float(request.POST.get('chest', 0))
+        val4 = float(request.POST.get('trestbps', 0))
+        val5 = float(request.POST.get('chol', 0))
+        val6 = float(request.POST.get('fbs', 0))
+        val7 = float(request.POST.get('restecg', 0))
+        val8 = float(request.POST.get('thalach', 0))
+        val9 = float(request.POST.get('exang', 0))
+        val10 = float(request.POST.get('oldpeak', 0))
+        val11 = float(request.POST.get('slope', 0))
+        val12 = float(request.POST.get('ca', 0))
+        val13 = float(request.POST.get('thal', 0))
 
-    # Scale the input values as they need to match the training data scale
-    input_data = scaler.transform([[val1, val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12, val13]])
+        # Scale the input values as they need to match the training data scale
+        input_data = scaler.transform([[val1, val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12, val13]])
 
-    # Make a prediction
-    pred = heart_model.predict(input_data)
+        # Make a prediction
+        pred = heart_model.predict(input_data)
 
-    # Decide the outcome and render the appropriate template
-    if pred == [1]:
-        return render(request, "PositiveHeart.html", {"result2": "Positive for Heart Disease"})  
-    else:
-        return render(request, "NegativeHeart.html", {"result2": "Negative for Heart Disease"})
+        # Decide the outcome and render the appropriate template
+        if pred == [1]:
+            return render(request, "PositiveHeart.html", {"result2": "Positive for Heart Disease"})  
+        else:
+            return render(request, "NegativeHeart.html", {"result2": "Negative for Heart Disease"})
     
-
+    # If the request method is not POST, show an error or render a different template
+    return render(request, 'error.html', {'message': 'Invalid request method.'})
 
 #!BREAST MODEL------------------------------------------
 def breast_result(request):
@@ -222,7 +222,7 @@ def breast_result(request):
 
 #Kidney Logistic Regression
 def kidney_result(request):
-    data = pd.read_csv(r"C:\Users\Nur Athirah\Downloads\kidney_disease.csv")
+    data = pd.read_csv(r"C:\Users\Hannah Kamillia\Downloads\kidney_disease.csv")
 
     # Drop ID column
     data = data.drop(columns=["id"], errors='ignore')
@@ -295,6 +295,7 @@ def kidney_result(request):
                                 int(request.GET['n19']), int(request.GET['n20']), int(request.GET['n21']),
                                 int(request.GET['n22']), int(request.GET['n23']), int(request.GET['n24'])]],
                                columns=X.columns)
+    
 
     # Scale the user input
     input_data_scaled = scaler.transform(input_data)

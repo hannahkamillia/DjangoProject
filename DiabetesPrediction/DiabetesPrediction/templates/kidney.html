@@ -92,8 +92,143 @@
             visibility: visible;
             opacity: 1;
         }
+
+        .next {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .prev {
+            background-color: grey;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .progress {
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 20px;
+            width: 0;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+        .step-title {
+            font-weight: bold;
+            font-size: 20px;
+            margin: 10px 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            text-align: center;
+            background: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+      
+        .container {
+            width: 60%;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
     </style>
    <script>
+
+        let currentStep = 0;
+
+        function showStep(step) {
+            const steps = document.querySelectorAll(".step");
+            const progressBar = document.querySelector(".progress-bar");
+            steps.forEach((s, index) => {
+                s.classList.toggle("active", index === step);
+            });
+            const progressPercentage = ((step + 1) / steps.length) * 100;
+            progressBar.style.width = progressPercentage + "%";
+
+            // Update step numbers
+            const stepNumbers = document.querySelectorAll(".step-number");
+            stepNumbers.forEach((num, index) => {
+                num.style.opacity = index <= step ? 1 : 0.5;
+            });
+        }
+
+        function nextStep(event) {
+            event.preventDefault();
+            const inputs = document.querySelectorAll(`.step:nth-child(${currentStep + 1}) input, .step:nth-child(${currentStep + 1}) select`);
+            let allFilled = true;
+
+            inputs.forEach(input => {
+                if (input.value.trim() === "" || input.selectedIndex === 0) { // Handle both input and select elements
+                    allFilled = false;
+                    input.style.border = "2px solid red"; // Highlight empty fields
+                } else {
+                    input.style.border = ""; // Reset border for filled fields
+                }
+            });
+
+            if (allFilled) {
+                currentStep++;
+                if (currentStep < document.querySelectorAll(".step").length) {
+                    showStep(currentStep);
+                } else {
+                    document.querySelector("form").submit(); // Submit the form after final step
+                }
+            } else {
+                alert("Please fill in all fields!");
+            }
+        }
+
+        function prevStep(event) {
+            event.preventDefault();
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            showStep(currentStep);
+            const nextButtons = document.querySelectorAll(".next");
+            const prevButtons = document.querySelectorAll(".prev");
+            nextButtons.forEach(button => {
+                button.addEventListener("click", nextStep);
+            });
+            prevButtons.forEach(button => {
+                button.addEventListener("click", prevStep);
+            });
+        });
     // Function to validate form inputs
     function validateForm(event) {
         // Get all input elements in the form
@@ -164,219 +299,271 @@
       </div>
       <div align = "center" class = "main">
         <h1>Kidney Disease Predictor</h1>
-        <form action="kidney_result">
-            <table>
-                <tr>
-                    <td align="right">Age: </td>
-                    <td align="left"><input type="number" name="n1" placeholder="years" required></td>
-                </tr>
-                <tr>
-                    <td align="right">Blood Pressure: </td>
-                    <td align="left"><input type="text" name="n2" placeholder="mm Hg" required></td>
-                </tr>
-                <tr>
-                    <td align="right">Specific Gravity: </td>
-                    <td align="left"><input type="text" name="n3" placeholder="e.g., 1.020" required>
-                        <span class="tooltip">?
-                            <span class="tooltiptext">Specific gravity in urine refers to the concentration of solutes.</span>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">Albumin: </td>
-                    <td align="left"><input type="text" name="n4" placeholder="g/dL" required min="0" max="4">
-                        <span class="tooltip">?
-                            <span class="tooltiptext">A protein found in the blood.</span>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">Sugar Levels: </td>
-                    <td align="left"><input type="text" name="n5" placeholder="g/dL" required min="0" max="5">
-                        <span class="tooltip">?
-                            <span class="tooltiptext">The amount of glucose in the blood.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Red Blood Cells: </td>
-                    <td align="left">
-                        <select name="n6" id="n6" required>
-                            <option value="" selected disabled class="default-option">Select</option>
-                            <option value="1">Normal</option>
-                            <option value="0">abnormal</option>
-                          </select>
-                          <span class="tooltip">?
-                            <span class="tooltiptext">Cells in the blood that carry oxygen.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Pus Cells: </td>
-                    <td align="left">
-                        <select name="n7" id="n7" required>
-                            <option value="" selected disabled class="default-option">Select</option>
-                            <option value="1">Normal</option>
-                            <option value="0">abnormal</option>
-                          </select>
-                          <span class="tooltip">?
-                            <span class="tooltiptext">White blood cells in urine.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Pus Cell Clumps: </td>
-                    <td align="left">
-                        <select name="n8" id="n8" required>
-                            <option value="" selected disabled class="default-option">Select</option>
-                            <option value="1">Present</option>
-                            <option value="0">Not Present</option>
-                          </select>
-                          <span class="tooltip">?
-                            <span class="tooltiptext">Clusters of white blood cells in urine.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Bacteria in urine: </td>
-                    <td align="left">
-                        <select name="n9" id="n9" required>
-                            <option value="" selected disabled class="default-option">Select</option>
-                            <option value="1">Present</option>
-                            <option value="0">Not Present</option>
-                          </select>
-                          <span class="tooltip">?
-                            <span class="tooltiptext">The presence of bacteria in urine.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Blood Glucose Random: </td>
-                    <td align="left"><input type="text" name="n10" placeholder="g/dL" required min="0">
-                        <span class="tooltip">?
-                            <span class="tooltiptext">A measurement of blood sugar at any time of the day.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Blood Urea Levels: </td>
-                    <td align="left"><input type="text" name="n11" placeholder="mg/dL" min="0" required>
-                        <span class="tooltip">?
-                            <span class="tooltiptext">The amount of urea in the blood.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Serum Creatinine: </td>
-                    <td align="left"><input type="text" name="n12" placeholder="mg/dL" min="0" required>
-                        <span class="tooltip">?
-                            <span class="tooltiptext">The amount of waste product in the blood.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Sodium Levels: </td>
-                    <td align="left"><input type="text" name="n13" placeholder="mEq/dL" min="0" required>
-                        <span class="tooltip">?
-                            <span class="tooltiptext">The amount of sodium in the blood.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Potassium Levels: </td>
-                    <td align="left"><input type="text" name="n14" placeholder="mEq/dL" min="0" required>
-                        <span class="tooltip">?
-                            <span class="tooltiptext">The amount of potassium in the blood.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Hemoglobin: </td>
-                    <td align="left"><input type="text" name="n15" placeholder="g/dL" min="0" required>
-                        <span class="tooltip">?
-                            <span class="tooltiptext">The amount of protein in red blood cells that carries oxygen.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Packed Cell Volume: </td>
-                    <td align="left"><input type="text" name="n16" placeholder="Percentage" min="0" required>
-                        <span class="tooltip">?
-                            <span class="tooltiptext">The proportion of blood made up of red blood cells.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">White Blood Cell Count: </td>
-                    <td align="left"><input type="text" name="n17" placeholder="per cubic mm" min="0" required>
-                        <span class="tooltip">?
-                            <span class="tooltiptext">A measure of the number of white blood cells in the blood.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Red Blood Cell Count: </td>
-                    <td align="left"><input type="text" name="n18" placeholder="millions per cubic mm" min="0" required>
-                        <span class="tooltip">?
-                            <span class="tooltiptext">A measure of the number of red blood cells in the blood.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Hypertension: </td>
-                    <td align="left">
-                        <select name="n19" id="n19" required>
-                            <option value="" selected disabled class="default-option">Select</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                          </select></td>
-                </tr>
-                <tr>
-                    <td align="right">Diabetes Mellitus: </td>
-                    <td align="left">
-                        <select name="n20" id="n20" required>
-                            <option value="" selected disabled class="default-option">Select</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                          </select></td>
-                </tr>
-                <tr>
-                    <td align="right">Coronary Artery Disease: </td>
-                    <td align="left">
-                        <select name="n21" id="n21" required>
-                            <option value="" selected disabled class="default-option">Select</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                          </select>
-                          <span class="tooltip">?
-                            <span class="tooltiptext">A condition where the arteries of the heart are narrowed or blocked.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Appetite: </td>
-                    <td align="left">
-                        <select name="n22" id="n22" required>
-                            <option value="" selected disabled class="default-option">Select</option>
-                            <option value="1">Good</option>
-                            <option value="0">Poor</option>
-                          </select>
-                          <span class="tooltip">?
-                            <span class="tooltiptext">The desire to eat.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Pressence of Pedal Edema: </td>
-                    <td align="left">
-                        <select name="n23" id="n23" required>
-                            <option value="" selected disabled class="default-option">Select</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                          </select>
-                          <span class="tooltip">?
-                            <span class="tooltiptext">Swelling in the feet or ankles.</span>
-                        </span></td>
-                </tr>
-                <tr>
-                    <td align="right">Anemia: </td>
-                    <td align="left">
-                        <select name="n24" id="n24" required>
-                            <option value="" selected disabled class="default-option">Select</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                          </select>
-                          <span class="tooltip">?
-                            <span class="tooltiptext">A condition where there are not enough red blood cells to carry oxygen.</span>
-                        </span></td>
-                </tr>
-            </table>
-            <input type="submit" value="Predict">
-        </form>
+
+        <div class="container">
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+
+                <form action="kidney_result" method="get">
+
+                    <div class="step active">
+                        <div class="step-title"><span class="step-number">1</span>Step 1: Personal Information</div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="age">Age:</label>
+                            <input type="number" id="n1" name="n1" placeholder="Enter your age" required>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="BloodPres">Blood Pressure:</label>
+                            <input type="text" name="n2" placeholder="mm Hg" required>
+                        </div>
+                        <button type="button" class="next">Next</button>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title"><span class="step-number">2</span>Step 2: Urine Analysis </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="Grav">Specific Gravity:</label>
+                            <input type="text" name="n3" placeholder="e.g., 1.020" required>
+                            <span class="tooltip">?
+                                <span class="tooltiptext">Specific gravity in urine refers to the concentration of solutes.</span>
+                            </span>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="alb">Albumin: </label>
+                            <input type="text" name="n4" placeholder="g/dL" required min="0" max="4">
+                                <span class="tooltip">?
+                                    <span class="tooltiptext">A protein found in the blood.</span>
+                                </span>
+                            
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="suglvl">Sugar Levels: </label>
+                            <input type="text" name="n5" placeholder="g/dL" required min="0" max="5">
+                                <span class="tooltip">?
+                                    <span class="tooltiptext">The amount of glucose in the blood.</span>
+                                </span>
+                            
+                        </div>
+                        <button type="button" class="prev">Previous</button>
+                        <button type="button" class="next">Next</button>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title"><span class="step-number">3</span>Step 3: Blood & Cells analysis </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="RBC">Red Blood Cells:</label>
+                            <select name="n6" id="n6" required>
+                                <option value="" selected disabled class="default-option">Select</option>
+                                <option value="1">Normal</option>
+                                <option value="0">abnormal</option>
+                            </select>
+                            <span class="tooltip">?
+                                <span class="tooltiptext">Cells in the blood that carry oxygen.</span>
+                            </span>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label for="Hmg">Hemoglobin:</label>
+                            <input type="text" name="n15" placeholder="g/dL" min="0" required>
+                                <span class="tooltip">?
+                                    <span class="tooltiptext">The amount of protein in red blood cells that carries oxygen.</span>
+                                </span>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label for="Pcv">Packed Cell Volume:</label>
+                            <input type="text" name="n16" placeholder="Percentage" min="0" required>
+                                <span class="tooltip">?
+                                    <span class="tooltiptext">The proportion of blood made up of red blood cells.</span>
+                                </span>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label for="WBCC">White Blood Cell Count:</label>
+                            <input type="text" name="n17" placeholder="per cubic mm" min="0" required>
+                                <span class="tooltip">?
+                                    <span class="tooltiptext">A measure of the number of white blood cells in the blood.</span>
+                                </span>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <label for="RBCC">Red Blood Cell Count: </label>
+                            <input type="text" name="n18" placeholder="millions per cubic mm" min="0" required>
+                                <span class="tooltip">?
+                                    <span class="tooltiptext">A measure of the number of red blood cells in the blood.</span>
+                                </span>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label for="Hyp">Hypertension:</label>
+                            <select name="n19" id="n19" required>
+                                <option value="" selected disabled class="default-option">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <button type="button" class="prev">Previous</button>
+                        <button type="button" class="next">Next</button>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title"><span class="step-number">4</span>Step 4:Puss Cells and Clumps </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="Pus">Pus Cells:</label>
+                            <select name="n7" id="n7" required>
+                                <option value="" selected disabled class="default-option">Select</option>
+                                <option value="1">Normal</option>
+                                <option value="0">abnormal</option>
+                            </select>
+                            <span class="tooltip">?
+                                <span class="tooltiptext">White blood cells in urine.</span>
+                            </span>
+                        </div>
+                        <div> 
+                            <label for="PCC">Pus Cell Clumps:</label>
+                            <select name="n8" id="n8" required>
+                                <option value="" selected disabled class="default-option">Select</option>
+                                <option value="1">Present</option>
+                                <option value="0">Not Present</option>
+                            </select>
+                            <span class="tooltip">?
+                                <span class="tooltiptext">Clusters of white blood cells in urine.</span>
+                            </span>
+                        </div>
+                        <button type="button" class="prev">Previous</button>
+                        <button type="button" class="next">Next</button>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title"><span class="step-number">5</span>Step 5:Urinary Bacteria and Blood Metrics </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="Bacteria">Bacteria in urine:</label>
+                            <select name="n9" id="n9" required>
+                                <option value="" selected disabled class="default-option">Select</option>
+                                <option value="1">Present</option>
+                                <option value="0">Not Present</option>
+                            </select>
+                            <span class="tooltip">?
+                                <span class="tooltiptext">The presence of bacteria in urine.</span>
+                            </span>
+                        </div>
+                        <div> 
+                            <label for="BGR">Blood Glucose Random:</label>
+                            <input type="text" name="n10" placeholder="g/dL" required min="0">
+                                <span class="tooltip">?
+                                    <span class="tooltiptext">A measurement of blood sugar at any time of the day.</span>
+                                </span>
+                        </div>
+
+                        <div> 
+                            <label for="BUL">Blood Urea Levels:</label>
+                            <input type="text" name="n11" placeholder="mg/dL" min="0" required>
+                                <span class="tooltip">?
+                                    <span class="tooltiptext">The amount of urea in the blood.</span>
+                                </span>
+                        </div>
+
+                        <button type="button" class="prev">Previous</button>
+                        <button type="button" class="next">Next</button>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title"><span class="step-number">6</span>Step 6: Electrolytes and Waste Products</div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="Creat">Serum Creatinine:</label>
+                            <input type="text" name="n12" placeholder="mg/dL" min="0" required>
+                            <span class="tooltip">?
+                                <span class="tooltiptext">The amount of waste product in the blood.</span>
+                            </span>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="Sod">Sodium Levels: </label>
+                            <input type="text" name="n13" placeholder="mEq/dL" min="0" required>
+                                <span class="tooltip">?
+                                    <span class="tooltiptext">The amount of sodium in the blood.</span>
+                                </span>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label for="Pot">Potassium Levels:</label>
+                            <input type="text" name="n14" placeholder="mEq/dL" min="0" required>
+                            <span class="tooltip">?
+                                <span class="tooltiptext">The amount of potassium in the blood.</span>
+                            </span>
+                        </div>
+                        <button type="button" class="prev">Previous</button>
+                        <button type="button" class="next">Next</button>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title"><span class="step-number">7</span>Step 7: Chronic Conditions </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="Diab">Diabetes Mellitus: </label>
+                            <select name="n20" id="n20" required>
+                                <option value="" selected disabled class="default-option">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label for="CAD">Coronary Artery Disease:  </label>
+                            <select name="n21" id="n21" required>
+                                <option value="" selected disabled class="default-option">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                            <span class="tooltip">?
+                                <span class="tooltiptext">A condition where the arteries of the heart are narrowed or blocked.</span>
+                            </span>
+                        </div>
+                        <button type="button" class="prev">Previous</button>
+                        <button type="button" class="next">Next</button>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title"><span class="step-number">8</span>Step 8: General Health Indicators </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="Apt">Appetite: </label>
+                            <select name="n22" id="n22" required>
+                                <option value="" selected disabled class="default-option">Select</option>
+                                <option value="1">Good</option>
+                                <option value="0">Poor</option>
+                            </select>
+                            <span class="tooltip">?
+                                <span class="tooltiptext">The desire to eat.</span>
+                            </span>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label for="Pedal">Pressence of Pedal Edema: </label>
+                            <select name="n23" id="n23" required>
+                                <option value="" selected disabled class="default-option">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                            <span class="tooltip">?
+                                <span class="tooltiptext">Swelling in the feet or ankles.</span>
+                            </span>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label for="Anemia">Anemia:  </label>
+                            <select name="n24" id="n24" required>
+                                <option value="" selected disabled class="default-option">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                            <span class="tooltip">?
+                                <span class="tooltiptext">A condition where there are not enough red blood cells to carry oxygen.</span>
+                            </span>
+                        </div>
+                            <button type="button" class="prev">Previous</button>
+                            <button type="submit" class="next">Submit</button>
+                        </div>
+                </form>
+            </div>
        </div>
 </body>
 </html>
