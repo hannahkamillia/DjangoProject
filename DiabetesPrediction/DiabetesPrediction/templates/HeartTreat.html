@@ -22,10 +22,16 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
+            padding-top: 50px;
         }
         .topnav {
             background-color: #83b578;
             overflow: hidden;
+            position:fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
         }
         .topnav a {
             float: right;
@@ -59,7 +65,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             overflow: hidden;
-            max-width: 600px;
+            width: 100%;
             margin: 30px auto;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -74,7 +80,7 @@
         }
         .header-dietary {
             position: relative;
-            color: white;
+            color: black;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -100,7 +106,7 @@
 
         .header-medical {
             position: relative;
-            color: white;
+            color: black;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -125,7 +131,7 @@
 
         .header-lifestyle {
             position: relative;
-            color: white;
+            color: black;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -161,12 +167,6 @@
             padding: 10px;
         }
 
-        .sidebar {
-        height: 100vh;
-        padding-top: 1rem;
-        background-color: #f8f9fa; /* Light gray background */
-        border-right: 1px solid #ddd; /* Border for separation */
-        }
         .sidebar .nav-link {
             color: #333;
         }
@@ -180,10 +180,12 @@
         }
 
         .sidebar {
-            height: 200vh;
+            height: 100%;
             padding-top: 1rem;
             background-color: #f8f9fa; /* Light gray background */
             border-right: 1px solid #ddd; /* Border for separation */
+            overflow-y: auto;
+            position: fixed;
         }
 
         .sidebar .nav-link {
@@ -265,9 +267,9 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="#overview" onclick="toggleSidebarItem(this)">Overview</a>
-                                <ul class="sub-nav" style="display: none;">
+                                <!--ul class="sub-nav" style="display: none;">
                                     <li><a class="nav-link" href="#types">Types of Diabetes</a></li>
-                                </ul>
+                                </ul-->
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#symptoms">Symptoms</a>
@@ -305,7 +307,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\1.png" alt="Heart Disease">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\shortness of breath.png" alt="Heart Disease">
                                                 <h4>Shortness of Breath (Dyspnea)</h4>
                                                 <p>Often described as a sensation of inadequate breathing, it is prevalent among patients with heart disease.</p>
                                     
@@ -313,7 +315,7 @@
                                         </div><!-- End Col -->
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\2.png" alt="Heart Disease">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\chest pain.png" alt="Heart Disease">
                                                 <h4>Chest Pain</h4>
                                                 <p> A significant indicator, with studies showing that 90% of participants experiencing severe chest pain were diagnosed with heart disease. </p>
                                                
@@ -323,7 +325,7 @@
                                         
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\3.png" alt="Heart Disease">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\swelling.png" alt="Heart Disease">
                                                 <h4>Swelling</h4>
                                                 <p>This symptom typically occurs in the lower extremities due to fluid accumulation.
                                                 </p>
@@ -332,7 +334,7 @@
                                         </div><!-- End Col -->
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\4.png" alt="Heart Disease">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\fatigue.png" alt="Heart Disease">
                                                 <h4>Fatigue</h4>
                                                 <p>Reported by a substantial percentage of patients, fatigue can be debilitating and is frequently associated with heart conditions.
                                                 </p>
@@ -389,7 +391,7 @@
                                         </div>
                                         <div class="accordion-item">
                                             <div class="accordion-header header-lifestyle" onclick="toggleAccordion(this)">
-                                                Lifestyle
+                                                LIFESTYLE
                                             </div>
                                             <div class="accordion-body">
                                                 <div class="accordion-body-content">

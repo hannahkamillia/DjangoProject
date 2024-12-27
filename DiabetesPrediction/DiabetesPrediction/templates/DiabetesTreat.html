@@ -22,10 +22,16 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
+            padding-top: 50px;
         }
         .topnav {
             background-color: #83b578;
             overflow: hidden;
+            position:fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
         }
         .topnav a {
             float: right;
@@ -59,7 +65,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             overflow: hidden;
-            max-width: 600px;
+            width: 100%;
             margin: 30px auto;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -74,7 +80,7 @@
         }
         .header-dietary {
             position: relative;
-            color: white;
+            color: black;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -100,7 +106,7 @@
 
         .header-medical {
             position: relative;
-            color: white;
+            color: black;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -125,7 +131,7 @@
 
         .header-lifestyle {
             position: relative;
-            color: white;
+            color: black;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -161,12 +167,6 @@
             padding: 10px;
         }
 
-        .sidebar {
-        height: 100vh;
-        padding-top: 1rem;
-        background-color: #f8f9fa; /* Light gray background */
-        border-right: 1px solid #ddd; /* Border for separation */
-        }
         .sidebar .nav-link {
             color: #333;
         }
@@ -180,10 +180,12 @@
         }
 
         .sidebar {
-            height: 200vh;
+            height: 100%;
             padding-top: 1rem;
             background-color: #f8f9fa; /* Light gray background */
             border-right: 1px solid #ddd; /* Border for separation */
+            overflow-y: auto;
+            position: fixed;
         }
 
         .sidebar .nav-link {
@@ -272,7 +274,7 @@
                                 <a class="nav-link" href="#symptoms">Symptoms</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#treatment">Treatment</a>
+                                <a class="nav-link" href="#treatment">Prevention and Treatment</a>
                             </li>
                         </ul>
                     </div>
@@ -304,7 +306,7 @@
                                         <!-- Card 1: Type 1 Diabetes -->
                                         <div class="col-md-6">
                                             <div class="card shadow-sm mb-4">
-                                                <img src="{% static '\diabetespredict\images\diabetes1.jpg' %}" class="card-img-top" alt="Type 1 Diabetes">
+                                                <img src="{% static '\diabetespredict\images\type 1 diabetes.png' %}" class="card-img-top" alt="Type 1 Diabetes">
                                                 <div class="card-body">
                                                     <h5 class="card-title">Type 1 Diabetes</h5>
                                                     <p class="card-text">
@@ -317,7 +319,7 @@
                                         <!-- Card 2: Type 2 Diabetes -->
                                         <div class="col-md-6">
                                             <div class="card shadow-sm mb-4">
-                                                <img src="{% static '\diabetespredict\images\diabetes2.jpg' %}" class="card-img-top" alt="Type 2 Diabetes">
+                                                <img src="{% static '\diabetespredict\images\type 2 diabetes.png' %}" class="card-img-top" alt="Type 2 Diabetes">
                                                 <div class="card-body">
                                                     <h5 class="card-title">Type 2 Diabetes</h5>
                                                     <p class="card-text">
@@ -335,7 +337,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\1.png" alt="Heart Disease">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\urination.png" alt="Diabetes">
                                                 <h4>Frequent Urination</h4>
                                                 <p>Often a result of high blood sugar levels, leading to increased thirst and fluid intake.</p>
                                     
@@ -343,7 +345,7 @@
                                         </div><!-- End Col -->
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\2.png" alt="Heart Disease">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\thirst.png" alt="Diabetes">
                                                 <h4>Excessive Thirst</h4>
                                                 <p>Known as polydipsia, this symptom is closely linked to frequent urination .</p>
                                                
@@ -352,15 +354,15 @@
                                         
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\3.png" alt="Heart Disease">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\weight loss.png" alt="Diabetes">
                                                 <h4>Weight Loss</h4>
-                                                <p> Unexplained weight loss can occur due to body breaking down fat and muscle for energy when it cannot utilize glucose .</p>
+                                                <p>Weight loss occurs when the body breaks down fat and muscle for energy instead of glucose.</p>
                                                    
                                             </div>
                                         </div><!-- End Col -->
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\4.png" alt="Heart Disease">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\fatigue.png" alt="Diabetes">
                                                 <h4>Fatigue</h4>
                                                 <p>A common complaint, fatigue can stem from the body's inability to convert glucose into energy.</p>
                                             </div>
@@ -410,7 +412,7 @@
                                         </div>
                                         <div class="accordion-item">
                                             <div class="accordion-header header-lifestyle" onclick="toggleAccordion(this)">
-                                                Lifestyle
+                                                LIFESTYLE
                                             </div>
                                             <div class="accordion-body">
                                                 <div class="accordion-body-content">

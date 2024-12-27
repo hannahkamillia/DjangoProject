@@ -22,10 +22,16 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
+            padding-top: 50px;
         }
         .topnav {
             background-color: #83b578;
             overflow: hidden;
+            position:fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
         }
         .topnav a {
             float: right;
@@ -59,7 +65,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             overflow: hidden;
-            max-width: 600px;
+            width: 100%;
             margin: 30px auto;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -74,7 +80,7 @@
         }
         .header-dietary {
             position: relative;
-            color: white;
+            color: black;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -100,7 +106,7 @@
 
         .header-medical {
             position: relative;
-            color: white;
+            color: black;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -125,7 +131,7 @@
 
         .header-lifestyle {
             position: relative;
-            color: white;
+            color: black;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -161,12 +167,6 @@
             padding: 10px;
         }
 
-        .sidebar {
-        height: 100vh;
-        padding-top: 1rem;
-        background-color: #f8f9fa; /* Light gray background */
-        border-right: 1px solid #ddd; /* Border for separation */
-        }
         .sidebar .nav-link {
             color: #333;
         }
@@ -180,10 +180,12 @@
         }
 
         .sidebar {
-            height: 200vh;
+            height: 100%;
             padding-top: 1rem;
             background-color: #f8f9fa; /* Light gray background */
             border-right: 1px solid #ddd; /* Border for separation */
+            overflow-y: auto;
+            position: fixed;
         }
 
         .sidebar .nav-link {
@@ -264,15 +266,15 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="#overview" onclick="toggleSidebarItem(this)">Overview</a>
-                                <ul class="sub-nav" style="display: none;">
+                                <!--ul class="sub-nav" style="display: none;">
                                     <li><a class="nav-link" href="#types">More about CKD</a></li>
-                                </ul>
+                                </ul-->
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#symptoms">Symptoms</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#treatment">Treatment</a>
+                                <a class="nav-link" href="#treatment">Prevention and Treatment</a>
                             </li>
                         </ul>
                     </div>
@@ -303,11 +305,11 @@ In CKD, these functions become impaired, leading to a buildup of toxins in the b
                                         <!-- Card 1: Type 1 Diabetes -->
                                         <div class="col-md-6">
                                             <div class="card shadow-sm mb-4">
-                                                <img src="{% static '\diabetespredict\images\stages of ckd.png' %}" class="card-img-top" alt="Type 1 Diabetes">
+                                                <img src="{% static '\diabetespredict\images\stages of ckd.png' %}" class="card-img-top" alt="Stages of CKD">
                                                 <div class="card-body">
                                                     <h5 class="card-title">Stages of CKD</h5>
                                                     <p class="card-text">
-                                                        CKD is classified into five stages based on the kidney's ability to filter waste from the blood, measured by the glomerular filtration rate.
+                                                        CKD is classified into five stages based on the kidney's ability to filter waste from the blood, measured by the glomerular filtration rate (GFR).
                                                     </p>
                                                 </div>
                                             </div>
@@ -316,11 +318,11 @@ In CKD, these functions become impaired, leading to a buildup of toxins in the b
                                         <!-- Card 2: Type 2 Diabetes -->
                                         <div class="col-md-6">
                                             <div class="card shadow-sm mb-4">
-                                                <img src="{% static '\diabetespredict\images\types of kidney disease that can lead to CKD.png' %}" class="card-img-top" alt="Type 2 Diabetes">
+                                                <img src="{% static '\diabetespredict\images\types of kidney disease that can lead to CKD.png' %}" class="card-img-top" alt="CKD causes">
                                                 <div class="card-body">
                                                     <h5 class="card-title">types of kidney disease that can lead to CKD</h5>
                                                     <p class="card-text">
-                                                        Early detection and management of these conditions can help prevent CKD progression..
+                                                        Early detection and management of these conditions can help prevent CKD progression.
                                                     </p>
                                                 </div>
                                             </div>
@@ -334,14 +336,14 @@ In CKD, these functions become impaired, leading to a buildup of toxins in the b
                                     <div class="row">
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\1.png" alt="Heart Disease">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\shortness of breath.png" alt="Heart Disease">
                                                 <h4>Shortness of Breath</h4>
                                                 <p> Cardiopulmonary symptoms, including shortness of breath, are also significant.</p>
                                             </div>
                                         </div><!-- End Col -->
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\2.png" alt="Heart Disease">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\nausea and vomiting.png" alt="Heart Disease">
                                                 <h4>Nausea and Vomiting</h4>
                                                 <p> Gastrointestinal issues such as nausea and vomiting are frequently reported.</p>
                                                
@@ -350,7 +352,7 @@ In CKD, these functions become impaired, leading to a buildup of toxins in the b
                                         
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\3.png" alt="Heart Disease">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\abdominal pain.png" alt="Heart Disease">
                                                 <h4>Pain</h4>
                                                 <p>About 57% of patients experience pain, which can include muscle cramps and abdominal discomfort.</p>
                                                    
@@ -358,7 +360,7 @@ In CKD, these functions become impaired, leading to a buildup of toxins in the b
                                         </div><!-- End Col -->
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\4.png" alt="Heart Disease">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\fatigue.png" alt="Heart Disease">
                                                 <h4>Fatigue</h4>
                                                 <p>Fatigue is one of the most prevalent symptoms, affecting over 50% of patients  </p>
                                               
@@ -395,6 +397,21 @@ In CKD, these functions become impaired, leading to a buildup of toxins in the b
                                         <div class="accordion-item">
                                             <div class="accordion-header header-medical" onclick="toggleAccordion(this)">
                                                 MEDICAL TREATMENT
+                                            </div>
+                                            <div class="accordion-body">
+                                                <div class="accordion-body-content">
+                                                    <ul>
+                                                        <li>Yang/Qi-Invigorating Formulations: These traditional Chinese formulations are believed to improve mitochondrial function, thereby potentially ameliorating CKD.</li>
+                                                        <li>Tetramethylpyrazine (TMP): An active ingredient from the Chinese herb Ligusticum wallichii, TMP has shown potential in preventing acute kidney injury (AKI) and slowing CKD progression through its antioxidant and anti-inflammatory properties.
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <div class="accordion-header header-lifestyle" onclick="toggleAccordion(this)">
+                                                LIFESTYLE
                                             </div>
                                             <div class="accordion-body">
                                                 <div class="accordion-body-content">

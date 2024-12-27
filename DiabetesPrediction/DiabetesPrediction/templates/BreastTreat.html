@@ -22,10 +22,16 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
+            padding-top: 50px;
         }
         .topnav {
             background-color: #83b578;
             overflow: hidden;
+            position:fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
         }
         .topnav a {
             float: right;
@@ -59,7 +65,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             overflow: hidden;
-            max-width: 600px;
+            width: 100%;
             margin: 30px auto;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -74,7 +80,7 @@
         }
         .header-dietary {
             position: relative;
-            color: white;
+            color: black;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -100,7 +106,7 @@
 
         .header-medical {
             position: relative;
-            color: white;
+            color: black;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -125,7 +131,7 @@
 
         .header-lifestyle {
             position: relative;
-            color: white;
+            color: black;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -162,10 +168,12 @@
         }
 
         .sidebar {
-        height: 100vh;
-        padding-top: 1rem;
-        background-color: #f8f9fa; /* Light gray background */
-        border-right: 1px solid #ddd; /* Border for separation */
+            height: 100%;
+            padding-top: 1rem;
+            background-color: #f8f9fa; /* Light gray background */
+            border-right: 1px solid #ddd; /* Border for separation */
+            overflow-y: auto;
+            position: fixed;
         }
         .sidebar .nav-link {
             color: #333;
@@ -177,13 +185,6 @@
 
         body {
             scroll-behavior: smooth;
-        }
-
-        .sidebar {
-            height: 200vh;
-            padding-top: 1rem;
-            background-color: #f8f9fa; /* Light gray background */
-            border-right: 1px solid #ddd; /* Border for separation */
         }
 
         .sidebar .nav-link {
@@ -209,7 +210,8 @@
         }
 
         .card img {
-            max-width: 100%; /* Ensures the image doesn't exceed the card's width */
+            max-width: 80%; /* Ensures the image doesn't exceed the card's width */
+            align-items: center;
             height: auto; /* Maintains the image's aspect ratio */
             border-radius: 5px; /* Optional: rounds the image's corners slightly */
             margin-bottom: 10px; /* Adds spacing below the image */
@@ -264,9 +266,9 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="#overview" onclick="toggleSidebarItem(this)">Overview</a>
-                                <ul class="sub-nav" style="display: none;">
+                                <!--ul class="sub-nav" style="display: none;">
                                     <li><a class="nav-link" href="#types">Types of Diabetes</a></li>
-                                </ul>
+                                </ul-->
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#symptoms">Symptoms</a>
@@ -293,22 +295,19 @@
                                 <div id="overview">
                                     <h4>Overview</h4>
                                     <p>
-                                        Diabetes is a chronic, metabolic disease characterized by elevated levels of blood glucose (or blood sugar), which leads over time to serious damage to the heart, blood vessels, eyes, kidneys and nerves. The most common is type 2 diabetes, usually in adults, which occurs when the body becomes resistant to insulin or doesn't make enough insulin.
-                                        In the past 3 decades the prevalence of type 2 diabetes has risen dramatically in countries of all income levels. Type 1 diabetes, once known as juvenile diabetes or insulin-dependent diabetes, is a chronic condition in which the pancreas produces little or no insulin by itself. For people living with diabetes, access to affordable treatment, including insulin, is critical to their survival. There is a globally agreed target to halt the rise in diabetes and obesity by 2025.
-                    
-                                        About 830 million people worldwide have diabetes, the majority living in low-and middle-income countries. More than half of people living with diabetes are not receiving treatment. Both the number of people with diabetes and the number of people with untreated diabetes have been steadily increasing over the past decades.
+                                        Breast cancer is a common and potentially life-threatening condition that arises when abnormal cells in the breast grow uncontrollably, forming a tumor. It can be classified as either non-invasive (confined to the ducts or lobules) or invasive, where it spreads to surrounding tissues or distant organs. Key risk factors include genetic predisposition, hormonal imbalances, lifestyle factors, and age. Symptoms often include lumps in the breast, changes in breast shape or size, and skin abnormalities. Early detection through screenings like mammograms and prompt treatment, including surgery, chemotherapy, radiation, and targeted therapies, significantly improve outcomes. Awareness and regular self-exams play a critical role in prevention and early diagnosis.
                                     </p>
                                     <div id="types">
-                                    <h5>Types of Diabetes</h5>
+                                    <h5>Types of Breast Tumor</h5>
                                     <div class="row">
                                         <!-- Card 1: Type 1 Diabetes -->
                                         <div class="col-md-6">
                                             <div class="card shadow-sm mb-4">
-                                                <img src="{% static '\diabetespredict\images\diabetes1.jpg' %}" class="card-img-top" alt="Type 1 Diabetes">
+                                                <img src="{% static '\diabetespredict\images\benign.png' %}" class="card-img-top" alt="Benign Tumor">
                                                 <div class="card-body">
-                                                    <h5 class="card-title">Type 1 Diabetes</h5>
+                                                    <h5 class="card-title">Benign Tumor</h5>
                                                     <p class="card-text">
-                                                        An autoimmune disease where the body's immune system attacks the cells that produce insulin.
+                                                        Non-cancerous tumors that do not spread to other tissues. They grow slowly, are usually harmless, and can often be removed without recurrence.
                                                     </p>
                                                 </div>
                                             </div>
@@ -317,11 +316,11 @@
                                         <!-- Card 2: Type 2 Diabetes -->
                                         <div class="col-md-6">
                                             <div class="card shadow-sm mb-4">
-                                                <img src="{% static '\diabetespredict\images\diabetes2.jpg' %}" class="card-img-top" alt="Type 2 Diabetes">
+                                                <img src="{% static '\diabetespredict\images\malignant.png' %}" class="card-img-top" alt="Malignant">
                                                 <div class="card-body">
-                                                    <h5 class="card-title">Type 2 Diabetes</h5>
+                                                    <h5 class="card-title">Malignant Tumor</h5>
                                                     <p class="card-text">
-                                                        A condition where the body either doesn't produce enough insulin or can't use insulin effectively.
+                                                        Cancerous tumors that can invade nearby tissues and spread to other parts of the body. They require prompt treatment to manage the disease.
                                                     </p>
                                                 </div>
                                             </div>
@@ -331,19 +330,36 @@
                                 </div>
     
                                 <div id="symptoms">
-                                    <h4>Early Signs of Breast Cancer</h4>
+                                    <h4>Symptoms</h4>
                                     <div class="row">
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\symptom breast.png" alt="Heart Disease">
-                                                
-                                                <p>Early-stage breast cancer may cause any of these symptoms. Some people have no symptoms at all.</p>
-                                    
+                                                <img class="card-img-top" src="\static\diabetespredict\images\breast lump.png" alt="Breast Cancer">
+                                                <h4>Lump</h4>
+                                                <p>A breast lump or thickening, often without pain.</p>
                                             </div>
                                         </div><!-- End Col -->
+                                        <div class="col-sm-6 col-md-3">
+                                            <div class="col-md-12 feature-box card">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\breast change size.png" alt="Breast Cancer">
+                                                <h4>Appearance</h4>
+                                                <p>Change in size, shape or appearance of the breast.</p>
+                                            </div>
                                         </div> <!-- End Col -->
-                                        
-                    
+                                        <div class="col-sm-6 col-md-3">
+                                            <div class="col-md-12 feature-box card">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\dimpling.png" alt="Breast Cancer">
+                                                <h4>Skin</h4>
+                                                <p>Dimpling, redness, pitting or other changes in the skin.</p>
+                                            </div>
+                                        </div> <!-- End Col -->
+                                        <div class="col-sm-6 col-md-3">
+                                            <div class="col-md-12 feature-box card">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\areola.png" alt="Breast Cancer">
+                                                <h4>Areola</h4>
+                                                <p>Change in nipple appearance or the skin surrounding the nipple (areola).</p>
+                                            </div>
+                                        </div> <!-- End Col -->
                                     </div>
                                       
                                 </div>
@@ -388,7 +404,7 @@
                                         </div>
                                         <div class="accordion-item">
                                             <div class="accordion-header header-lifestyle" onclick="toggleAccordion(this)">
-                                                Lifestyle
+                                                LIFESTYLE
                                             </div>
                                             <div class="accordion-body">
                                                 <div class="accordion-body-content">
