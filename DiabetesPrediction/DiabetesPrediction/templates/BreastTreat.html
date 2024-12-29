@@ -250,10 +250,7 @@
         <div class="topnav">
             <ul>
                 <a href="home">Home</a>
-                <a href="predict">Diabetes</a>
-                <a href="kidney">Kidney diseases</a>
-                <a href="heart">Heart Disease</a>
-                <a href="breast">Breast Cancer</a>
+               
             </ul>
         </div>
     
@@ -266,9 +263,12 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="#overview" onclick="toggleSidebarItem(this)">Overview</a>
-                                <!--ul class="sub-nav" style="display: none;">
-                                    <li><a class="nav-link" href="#types">Types of Diabetes</a></li>
-                                </ul-->
+                                <ul class="sub-nav" style="display: none;">
+                                    <li><a class="nav-link" href="#types">Types of Breast Tumor</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#factors">Risk Factors</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#symptoms">Symptoms</a>
@@ -328,6 +328,45 @@
                                     </div>
                                      </div>
                                 </div>
+                                
+                                <div id="factors">
+                                    <h5>Risk Factors</h5>
+                                <div class="table-responsive">
+                                        <table class="table table-bordered" style="background-color: #f5f5dc;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" style="background-color: white;">Non-Modifiable</th>
+                                                    <th class="text-center" style="background-color: white;">Modifiable</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <ul>
+                                                            <li>Increasing age</li>
+                                                            <li>Female</li>
+                                                            <li>Family history of breast cancer at a young age</li>
+                                                            <li>A carrier of pathogenic or likely pathogenic variants in genes e.g. BRCA1, BRCA2, PALB2, ATM & CHEK2</li>
+                                                            <li>Early menarche (≤12 years old) or late menopause (≥50 years old)</li>
+                                                            <li>History of neoplastic disease of breast</li>
+                                                            <li>Increased mammographic density</li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>Nulliparity</li>
+                                                            <li>Lack of breastfeeding</li>
+                                                            <li>Hormonal factors: oral contraceptives, hormone replacement therapy, unopposed estrogen use in hysterectomized women, etc.</li>
+                                                            <li>Lifestyle: overweight, lower level of physical activity, etc.</li>
+                                                            <li>Radiation exposure</li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
     
                                 <div id="symptoms">
                                     <h4>Symptoms</h4>
@@ -408,68 +447,14 @@
                                             </div>
                                             <div class="accordion-body">
                                                 <div class="accordion-body-content">
-                                                    <h2> Benefits of exercise</h2> 
+                                                  
                                 <ul>
-                                    <li>Exercise helps muscles use blood sugar for energy.</li>
-                                    <li>Regular activity improves insulin efficiency and lowers blood sugar levels.</li>
-                                    <li>Strenuous workouts have longer-lasting effects, but even light activities like housework, gardening, and walking are beneficial.</li>
-                                </ul>
-                                <h2>What to Do</h2>
-                             <h2>Consult Your Healthcare Professional</h2>
-                                <ul>
-                                     <li>Get advice on the right type and amount of exercise for you.</li>
-                                     <li>Aim for at least <strong>150 minutes/week</strong> of moderate aerobic activity (e.g., walking, biking, swimming).</li>
-                                     <li>Include <strong>strength-building exercises</strong> 2–3 times a week.</li>
-                                </ul>
-
-                                <h2>Ease Into Activity</h2>
-                                <ul>
-                                    <li>If you're inactive, check your overall health before starting.</li>
-                                    <li>Begin with a balance of aerobic and muscle-strengthening exercises.</li>
-                                </ul>
-
-                                <h2>Set a Schedule</h2>
-                                <ul>
-                                    <li>Choose the best time of day to align exercise with your meals and medication schedules.</li>
-                                </ul>
-
-                                <h2>Know Your Numbers</h2>
-                                <ul>
-                                    <li>Discuss target blood sugar levels with your healthcare provider before starting exercise.</li>
-                                </ul>
-
-                                <h2>Monitor Blood Sugar</h2>
-                                <ul>
-                                    <li>If you take insulin or other diabetes medicines, check your blood sugar:
-                                        <ul>
-                                            <li><strong>Before, during, and after exercise.</strong></li>
-                                            <li>Be aware of symptoms of low blood sugar (e.g., shakiness, fatigue, confusion).</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-
-                                <h2>Have Snacks as Needed</h2>
-                                <ul>
-                                    <li>Eat a small snack (15–30 grams of carbs) if your blood sugar is low (&lt;90 mg/dL or 5.0 mmol/L) before exercising.</li>
-                                    <li>If your blood sugar is between 90–124 mg/dL (5.0–6.9 mmol/L), consider 10 grams of glucose.</li>
-                                </ul>
-
-                                <h2>Stay Hydrated</h2>
-                                <ul>
-                                    <li>Drink plenty of water or fluids during exercise to prevent dehydration, which can affect blood sugar levels.</li>
-                                </ul>
-
-                                <h2>Be Prepared</h2>
-                                <ul>
-                                    <li>Carry a small snack, glucose tablets, or gel for quick blood sugar boosts.</li>
-                                    <li>Wear medical identification (e.g., bracelet, necklace, or card) in case of emergencies.</li>
-                                </ul>
-
-                                <h2>Adjust Your Treatment Plan</h2>
-                                <ul>
-                                    <li>If you take insulin, lower your dose before exercise if needed.</li>
-                                    <li>Monitor blood sugar closely after intense activity, as low levels can occur hours later.</li>
-                                    <li>Consult your healthcare professional for advice on adjusting your medication.</li>
+                                    <li>Limit or stay away from alcohol. </li>
+                                    <li>Stay at a healthy weight.</li>
+                                    <li>Move more and sit less.Get at least 75 minutes of vigorous aerobic exercise a week. </li>
+                                    <li>Limit hormone therapy after menopause.</li>
+                                    <li>Quit smoking</li>
+                                    <li>If you have a baby, breastfeeding will be helpful in preventing breast cancer.</li>
                                 </ul>
 
 
