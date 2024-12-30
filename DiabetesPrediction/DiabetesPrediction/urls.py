@@ -77,6 +77,7 @@ urlpatterns = [
     path('menu/KidneyTreat', views.KidneyTreat),
     path('menu/BreastTreat', views.BreastTreat),
     path('heart_result/HeartTreat', views.HeartTreat),
+     path('heart_result/home', views.home),
 
     # Heart model prediction routes
     path('predict/heart', views.heart_result),  # Updated to 'heart_result'

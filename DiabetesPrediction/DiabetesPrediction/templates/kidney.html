@@ -163,126 +163,126 @@
         .step.active {
             display: block;
         }
+        .error-message {
+        color: red;
+        font-size: 0.8em;
+    }
     </style>
    <script>
+let currentStep = 0;
 
-        let currentStep = 0;
+// Function to show a custom notification
+function showCustomNotification(message) {
+    const notification = document.createElement("div");
+    notification.innerText = message;
+    notification.style.position = "fixed";
+    notification.style.top = "20px";
+    notification.style.left = "50%";
+    notification.style.transform = "translateX(-50%)";
+    notification.style.backgroundColor = "#f44336"; // Red color for error
+    notification.style.color = "white";
+    notification.style.padding = "15px";
+    notification.style.borderRadius = "5px";
+    notification.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
+    notification.style.zIndex = "1000";
+    notification.style.fontFamily = "Arial, sans-serif";
+    notification.style.fontSize = "16px";
 
-        function showStep(step) {
-            const steps = document.querySelectorAll(".step");
-            const progressBar = document.querySelector(".progress-bar");
-            steps.forEach((s, index) => {
-                s.classList.toggle("active", index === step);
-            });
-            const progressPercentage = ((step + 1) / steps.length) * 100;
-            progressBar.style.width = progressPercentage + "%";
+    document.body.appendChild(notification);
 
-            // Update step numbers
-            const stepNumbers = document.querySelectorAll(".step-number");
-            stepNumbers.forEach((num, index) => {
-                num.style.opacity = index <= step ? 1 : 0.5;
-            });
-        }
+    setTimeout(() => {
+        document.body.removeChild(notification);
+    }, 3000);
+}
 
-        function nextStep(event) {
-            event.preventDefault();
-            const inputs = document.querySelectorAll(`.step:nth-child(${currentStep + 1}) input, .step:nth-child(${currentStep + 1}) select`);
-            let allFilled = true;
+// Function to show the current step
+function showStep(step) {
+    const steps = document.querySelectorAll(".step");
+    const progressBar = document.querySelector(".progress-bar");
 
-            inputs.forEach(input => {
-                if (input.value.trim() === "" || input.selectedIndex === 0) { // Handle both input and select elements
-                    allFilled = false;
-                    input.style.border = "2px solid red"; // Highlight empty fields
-                } else {
-                    input.style.border = ""; // Reset border for filled fields
-                }
-            });
-
-            if (allFilled) {
-                currentStep++;
-                if (currentStep < document.querySelectorAll(".step").length) {
-                    showStep(currentStep);
-                } else {
-                    document.querySelector("form").submit(); // Submit the form after final step
-                }
-            } else {
-                alert("Please fill in all fields!");
-            }
-        }
-
-        function prevStep(event) {
-            event.preventDefault();
-            if (currentStep > 0) {
-                currentStep--;
-                showStep(currentStep);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            showStep(currentStep);
-            const nextButtons = document.querySelectorAll(".next");
-            const prevButtons = document.querySelectorAll(".prev");
-            nextButtons.forEach(button => {
-                button.addEventListener("click", nextStep);
-            });
-            prevButtons.forEach(button => {
-                button.addEventListener("click", prevStep);
-            });
-        });
-    // Function to validate form inputs
-    function validateForm(event) {
-        // Get all input elements in the form
-        const inputs = document.querySelectorAll("input[type='text']");
-        let allFilled = true;
-
-        // Check if any input is empty
-        inputs.forEach(input => {
-            if (input.value.trim() === "") {
-                allFilled = false;
-                input.style.border = "2px solid red"; // Highlight empty fields
-            } else {
-                input.style.border = ""; // Reset border for filled fields
-            }
-        });
-
-        // If not all fields are filled, show custom notification and prevent form submission
-        if (!allFilled) {
-            showCustomNotification("Please fill in the symptoms!");
-            event.preventDefault(); // Prevent form submission
-        }
-    }
-
-    // Function to show a custom notification
-    function showCustomNotification(message) {
-        const notification = document.createElement("div");
-        notification.innerText = message;
-        notification.style.position = "fixed";
-        notification.style.top = "20px";
-        notification.style.left = "50%";
-        notification.style.transform = "translateX(-50%)";
-        notification.style.backgroundColor = "#f44336"; // Red color for error
-        notification.style.color = "white";
-        notification.style.padding = "15px";
-        notification.style.borderRadius = "5px";
-        notification.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
-        notification.style.zIndex = "1000";
-        notification.style.fontFamily = "Arial, sans-serif";
-        notification.style.fontSize = "16px";
-
-        // Append notification to the body
-        document.body.appendChild(notification);
-
-        // Automatically remove the notification after 3 seconds
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 3000);
-    }
-
-    // Attach the validateForm function to the form's submit event
-    document.addEventListener("DOMContentLoaded", () => {
-        const form = document.querySelector("form");
-        form.addEventListener("submit", validateForm);
+    steps.forEach((s, index) => {
+        s.classList.toggle("active", index === step);
     });
+
+    const progressPercentage = ((step + 1) / steps.length) * 100;
+    progressBar.style.width = progressPercentage + "%";
+
+    const stepNumbers = document.querySelectorAll(".step-number");
+    stepNumbers.forEach((num, index) => {
+        num.style.opacity = index <= step ? 1 : 0.5;
+    });
+}
+
+// Function to validate inputs in the current step
+function validateCurrentStep() {
+    const inputs = document.querySelectorAll(`.step:nth-child(${currentStep + 1}) input, .step:nth-child(${currentStep + 1}) select`);
+    let allValid = true;
+
+    inputs.forEach(input => {
+        const value = input.value.trim();
+
+        if (value === "" || (input.tagName === "SELECT" && input.selectedIndex === 0)) {
+            allValid = false;
+            input.style.border = "2px solid red";
+            showCustomNotification("Please fill in all required fields!");
+        } else if (input.type === "text" && !/^\d+$/.test(value)) {
+            allValid = false;
+            input.style.border = "2px solid red";
+            showCustomNotification("Please enter a whole number");
+        } else {
+            input.style.border = ""; // Reset border if valid
+        }
+    });
+
+    return allValid;
+}
+
+// Function to move to the next step
+function nextStep(event) {
+    event.preventDefault();
+
+    if (validateCurrentStep()) {
+        currentStep++;
+        if (currentStep < document.querySelectorAll(".step").length) {
+            showStep(currentStep);
+        } else {
+            document.querySelector("form").submit();
+        }
+    }
+}
+
+// Function to move to the previous step
+function prevStep(event) {
+    event.preventDefault();
+
+    if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+    }
+}
+
+// Event listener for DOMContentLoaded
+document.addEventListener("DOMContentLoaded", () => {
+    showStep(currentStep);
+
+    const nextButtons = document.querySelectorAll(".next");
+    const prevButtons = document.querySelectorAll(".prev");
+
+    nextButtons.forEach(button => {
+        button.addEventListener("click", nextStep);
+    });
+
+    prevButtons.forEach(button => {
+        button.addEventListener("click", prevStep);
+    });
+
+    const form = document.querySelector("form");
+    form.addEventListener("submit", event => {
+        if (!validateCurrentStep()) {
+            event.preventDefault();
+        }
+    });
+});
 </script>
 
 
@@ -312,10 +312,12 @@
                         <div style="margin-bottom: 15px;">
                             <label for="age">Age:</label>
                             <input type="number" id="n1" name="n1" placeholder="Enter your age" required>
+                            <span class="error-message" id="error-n1"></span>
                         </div>
                         <div style="margin-bottom: 15px;">
-                            <label for="BloodPres">Blood Pressure:</label>
+                            <label for="BloodPres">Blood Pressure (Systolic):</label>
                             <input type="text" name="n2" placeholder="mm Hg" required>
+                            <span class="error-message" id="error-n2"></span>
                         </div>
                         <button type="button" class="next">Next</button>
                     </div>
@@ -328,6 +330,7 @@
                             <span class="tooltip">?
                                 <span class="tooltiptext">Specific gravity in urine refers to the concentration of solutes.</span>
                             </span>
+                            <span class="error-message" id="error-n3"></span>
                         </div>
                         <div style="margin-bottom: 15px;">
                             <label for="alb">Albumin: </label>
@@ -335,6 +338,7 @@
                                 <span class="tooltip">?
                                     <span class="tooltiptext">A protein found in the blood.</span>
                                 </span>
+                                <span class="error-message" id="error-n4"></span>
                             
                         </div>
                         <div style="margin-bottom: 15px;">
@@ -343,10 +347,11 @@
                                 <span class="tooltip">?
                                     <span class="tooltiptext">The amount of glucose in the blood.</span>
                                 </span>
-                            
+                                <span class="error-message" id="error-n5"></span>
                         </div>
                         <button type="button" class="prev">Previous</button>
                         <button type="button" class="next">Next</button>
+                      
                     </div>
 
                     <div class="step">
@@ -361,47 +366,53 @@
                             <span class="tooltip">?
                                 <span class="tooltiptext">Cells in the blood that carry oxygen.</span>
                             </span>
+                            <span class="error-message" id="error-n6"></span>
                         </div>
 
                         <div style="margin-bottom: 15px;">
                             <label for="Hmg">Hemoglobin:</label>
-                            <input type="text" name="n15" placeholder="g/dL" min="0" required>
+                            <input type="text" name="n7" placeholder="g/dL" min="0" required>
                                 <span class="tooltip">?
                                     <span class="tooltiptext">The amount of protein in red blood cells that carries oxygen.</span>
                                 </span>
+                                <span class="error-message" id="error-n7"></span>
                         </div>
 
                         <div style="margin-bottom: 15px;">
                             <label for="Pcv">Packed Cell Volume:</label>
-                            <input type="text" name="n16" placeholder="Percentage" min="0" required>
+                            <input type="text" name="n8" placeholder="Percentage" min="0" required>
                                 <span class="tooltip">?
                                     <span class="tooltiptext">The proportion of blood made up of red blood cells.</span>
                                 </span>
+                                <span class="error-message" id="error-n8"></span>
                         </div>
 
                         <div style="margin-bottom: 15px;">
                             <label for="WBCC">White Blood Cell Count:</label>
-                            <input type="text" name="n17" placeholder="per cubic mm" min="0" required>
+                            <input type="text" name="n9" placeholder="per cubic mm" min="0" required>
                                 <span class="tooltip">?
                                     <span class="tooltiptext">A measure of the number of white blood cells in the blood.</span>
                                 </span>
+                                <span class="error-message" id="error-n9"></span>
                         </div>
                         
                         <div style="margin-bottom: 15px;">
                             <label for="RBCC">Red Blood Cell Count: </label>
-                            <input type="text" name="n18" placeholder="millions per cubic mm" min="0" required>
+                            <input type="text" name="n10" placeholder="millions per cubic mm" min="0" required>
                                 <span class="tooltip">?
                                     <span class="tooltiptext">A measure of the number of red blood cells in the blood.</span>
                                 </span>
+                                <span class="error-message" id="error-n10"></span>
                         </div>
 
                         <div style="margin-bottom: 15px;">
                             <label for="Hyp">Hypertension:</label>
-                            <select name="n19" id="n19" required>
+                            <select name="n11" id="n11" required>
                                 <option value="" selected disabled class="default-option">Select</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
                             </select>
+                            <span class="error-message" id="error-n11"></span>
                         </div>
                         <button type="button" class="prev">Previous</button>
                         <button type="button" class="next">Next</button>
@@ -411,7 +422,7 @@
                         <div class="step-title"><span class="step-number">4</span>Step 4:Puss Cells and Clumps </div>
                         <div style="margin-bottom: 15px;">
                             <label for="Pus">Pus Cells:</label>
-                            <select name="n7" id="n7" required>
+                            <select name="n12" id="n12" required>
                                 <option value="" selected disabled class="default-option">Select</option>
                                 <option value="1">Normal</option>
                                 <option value="0">abnormal</option>
@@ -419,10 +430,11 @@
                             <span class="tooltip">?
                                 <span class="tooltiptext">White blood cells in urine.</span>
                             </span>
+                            <span class="error-message" id="error-n12"></span>
                         </div>
                         <div> 
                             <label for="PCC">Pus Cell Clumps:</label>
-                            <select name="n8" id="n8" required>
+                            <select name="n13" id="n13" required>
                                 <option value="" selected disabled class="default-option">Select</option>
                                 <option value="1">Present</option>
                                 <option value="0">Not Present</option>
@@ -430,6 +442,7 @@
                             <span class="tooltip">?
                                 <span class="tooltiptext">Clusters of white blood cells in urine.</span>
                             </span>
+                            <span class="error-message" id="error-n13"></span>
                         </div>
                         <button type="button" class="prev">Previous</button>
                         <button type="button" class="next">Next</button>
@@ -439,7 +452,7 @@
                         <div class="step-title"><span class="step-number">5</span>Step 5:Urinary Bacteria and Blood Metrics </div>
                         <div style="margin-bottom: 15px;">
                             <label for="Bacteria">Bacteria in urine:</label>
-                            <select name="n9" id="n9" required>
+                            <select name="n14" id="n14" required>
                                 <option value="" selected disabled class="default-option">Select</option>
                                 <option value="1">Present</option>
                                 <option value="0">Not Present</option>
@@ -447,21 +460,24 @@
                             <span class="tooltip">?
                                 <span class="tooltiptext">The presence of bacteria in urine.</span>
                             </span>
+                            <span class="error-message" id="error-n14"></span>
                         </div>
                         <div> 
                             <label for="BGR">Blood Glucose Random:</label>
-                            <input type="text" name="n10" placeholder="g/dL" required min="0">
+                            <input type="text" name="n15" placeholder="g/dL" required min="0">
                                 <span class="tooltip">?
                                     <span class="tooltiptext">A measurement of blood sugar at any time of the day.</span>
                                 </span>
+                                <span class="error-message" id="error-n15"></span>
                         </div>
 
                         <div> 
                             <label for="BUL">Blood Urea Levels:</label>
-                            <input type="text" name="n11" placeholder="mg/dL" min="0" required>
+                            <input type="text" name="n16" placeholder="mg/dL" min="0" required>
                                 <span class="tooltip">?
                                     <span class="tooltiptext">The amount of urea in the blood.</span>
                                 </span>
+                                <span class="error-message" id="error-n16"></span>
                         </div>
 
                         <button type="button" class="prev">Previous</button>
@@ -472,25 +488,28 @@
                         <div class="step-title"><span class="step-number">6</span>Step 6: Electrolytes and Waste Products</div>
                         <div style="margin-bottom: 15px;">
                             <label for="Creat">Serum Creatinine:</label>
-                            <input type="text" name="n12" placeholder="mg/dL" min="0" required>
+                            <input type="text" name="n17" placeholder="mg/dL" min="0" required>
                             <span class="tooltip">?
                                 <span class="tooltiptext">The amount of waste product in the blood.</span>
                             </span>
+                            <span class="error-message" id="error-n17"></span>
                         </div>
                         <div style="margin-bottom: 15px;">
                             <label for="Sod">Sodium Levels: </label>
-                            <input type="text" name="n13" placeholder="mEq/dL" min="0" required>
+                            <input type="text" name="n18" placeholder="mEq/dL" min="0" required>
                                 <span class="tooltip">?
                                     <span class="tooltiptext">The amount of sodium in the blood.</span>
                                 </span>
+                                <span class="error-message" id="error-n18"></span>
                         </div>
 
                         <div style="margin-bottom: 15px;">
                             <label for="Pot">Potassium Levels:</label>
-                            <input type="text" name="n14" placeholder="mEq/dL" min="0" required>
+                            <input type="text" name="n19" placeholder="mEq/dL" min="0" required>
                             <span class="tooltip">?
                                 <span class="tooltiptext">The amount of potassium in the blood.</span>
                             </span>
+                            <span class="error-message" id="error-n19"></span>
                         </div>
                         <button type="button" class="prev">Previous</button>
                         <button type="button" class="next">Next</button>
@@ -505,6 +524,7 @@
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
                             </select>
+                            <span class="error-message" id="error-n20"></span>
                         </div>
 
                         <div style="margin-bottom: 15px;">
@@ -517,6 +537,7 @@
                             <span class="tooltip">?
                                 <span class="tooltiptext">A condition where the arteries of the heart are narrowed or blocked.</span>
                             </span>
+                            <span class="error-message" id="error-n21"></span>
                         </div>
                         <button type="button" class="prev">Previous</button>
                         <button type="button" class="next">Next</button>
@@ -534,6 +555,7 @@
                             <span class="tooltip">?
                                 <span class="tooltiptext">The desire to eat.</span>
                             </span>
+                            <span class="error-message" id="error-n22"></span>
                         </div>
 
                         <div style="margin-bottom: 15px;">
@@ -546,6 +568,7 @@
                             <span class="tooltip">?
                                 <span class="tooltiptext">Swelling in the feet or ankles.</span>
                             </span>
+                            <span class="error-message" id="error-n23"></span>
                         </div>
 
                         <div style="margin-bottom: 15px;">
@@ -558,6 +581,7 @@
                             <span class="tooltip">?
                                 <span class="tooltiptext">A condition where there are not enough red blood cells to carry oxygen.</span>
                             </span>
+                            <span class="error-message" id="error-n24"></span>
                         </div>
                             <button type="button" class="prev">Previous</button>
                             <button type="submit" class="next">Submit</button>
