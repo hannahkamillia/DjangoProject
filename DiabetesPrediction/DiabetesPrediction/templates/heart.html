@@ -259,10 +259,16 @@
                             <option value="3">Severe Pain</option>
                             <option value="4">Critical Condition</option>
                         </select>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">Discomfort or pain in the chest may indicate heart problems.</span>
+                        </span>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label for="trestbps">Resting Blood Pressure:</label>
-                        <input type="number" id="trestbps" name="trestbps" placeholder="in mm Hg" required>
+                        <input type="number" id="trestbps" name="trestbps" placeholder="in mmHg" min="0" max="200" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The pressure in arteries when the heart is resting between beats.</span>
+                        </span>
                     </div>
                     <button type="button" class="prev">Previous</button>
                     <button type="button" class="next">Next</button>
@@ -273,7 +279,10 @@
                     <div class="step-title"><span class="step-number">3</span>Step 3: Cholesterol and Fasting Blood Sugar</div>
                     <div style="margin-bottom: 15px;">
                         <label for="chol">Cholesterol Level:</label>
-                        <input type="number" id="chol" name="chol" placeholder="in mg/dL" required>
+                        <input type="number" id="chol" name="chol" placeholder="in mg/dL" min="0" max="260" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The amount of fat in blood.</span>
+                        </span>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label for="fbs">Fasting Blood Sugar (>120 mg/dL):</label>
@@ -282,6 +291,9 @@
                             <option value="0">No</option>
                             <option value="1">Yes</option>
                         </select>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">Blood sugar level after not eating for at least 8 hours.</span>
+                        </span>
                     </div>
                     <button type="button" class="prev">Previous</button>
                     <button type="button" class="next">Next</button>
@@ -298,10 +310,16 @@
                             <option value="1">Having ST-T wave abnormality</option>
                             <option value="2">Showing probable or definite left ventricular hypertrophy</option>
                         </select>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">A test that records the electrical activity of the heart while the patient is at rest.</span>
+                        </span>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label for="thalach">Maximum Heart Rate Achieved:</label>
-                        <input type="number" id="thalach" name="thalach" placeholder="in bpm" required>
+                        <input type="number" id="thalach" name="thalach" placeholder="in bpm" min="0" max="300" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The highest heart rate reached during exercise.</span>
+                        </span>
                     </div>
                     <button type="button" class="prev">Previous</button>
                     <button type="button" class="next">Next</button>
@@ -318,14 +336,14 @@
                             <option value="1">Yes</option>
                         </select>
                         <span class="tooltip">?
-                            <span class="tooltiptext">Chest pain that occurs during exercise.</span>
+                            <span class="tooltiptext">Chest pain caused by reduced blood flow to the heart during exercise.</span>
                         </span>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label for="oldpeak">ST Depression Induced by Exercise:</label>
-                        <input type="number" id="oldpeak" name="oldpeak" placeholder="ST depression induced by exercise" required>
+                        <input type="number" id="oldpeak" name="oldpeak" placeholder="ST depression induced by exercise" min="0" max="5" required>
                         <span class="tooltip">?
-                            <span class="tooltiptext">A downward deflection in the ST segment of an electrocardiogram (ECG) during exercise.</span>
+                            <span class="tooltiptext">A change in the heart’s electrical pattern during exercise, which may indicate reduced blood flow.</span>
                         </span>
                     </div>
                     <div style="margin-bottom: 15px;">
@@ -337,7 +355,7 @@
                             <option value="2">Significantly rises or falls</option>
                         </select>
                         <span class="tooltip">?
-                            <span class="tooltiptext">The shape of the ST segment during exercise.</span>
+                            <span class="tooltiptext">Describes changes in heart signals during exercise.</span>
                         </span>
                     </div>
                     <div style="margin-bottom: 15px;">
@@ -350,7 +368,7 @@
                             <option value="3">3</option>
                         </select>
                         <span class="tooltip">?
-                            <span class="tooltiptext">Number of arteries with blockages as seen on an imaging test (angiography).</span>
+                            <span class="tooltiptext">Numbers of how many blood vessels have blockages using imaging (angiography).</span>
                         </span>
                     </div>
                     <div style="margin-bottom: 15px;">
@@ -361,6 +379,9 @@
                             <option value="6">Fixed Defect</option>
                             <option value="7">Reversible Defect</option>
                         </select>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">A test using a tracer to see blood flow to the heart.</span>
+                        </span>
                     </div>
                     <button type="button" class="prev">Previous</button>
                     <button type="submit" class="next">Submit</button>

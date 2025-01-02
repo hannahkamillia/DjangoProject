@@ -161,46 +161,49 @@
                 </tr>
                 <tr>
                     <td align = "right">Glucose: </td>
-                    <td align = "left"><input type="text" name="n2" placeholder="mg/dL">
+                    <td align = "left"><input type="text" name="n2" placeholder="mg/dL" min="0" max="200" required>
                         <span class="tooltip">?
                             <span class="tooltiptext">The level of glucose (sugar) in the blood.</span>
                         </span></td>
                 </tr>
                 <tr>
-                    <td align = "right">Blood Pressure: </td>
-                    <td align = "left"><input type="text" name="n3"></td>
+                    <td align = "right">Blood Pressure (diastolic): </td>
+                    <td align = "left"><input type="text" name="n3" placeholder="mmHg" min="0" max="200" required>
+                        <span class="tooltip">?
+                            <span class="tooltiptext">The bottom number measures the pressure in the arteries between heartbeats.</span>
+                        </span></td>
                 </tr>
                 <tr>
                     <td align = "right">Skin Thickness: </td>
-                    <td align = "left"><input type="text" name="n4" placeholder="mm">
+                    <td align = "left"><input type="text" name="n4" placeholder="mm" min="0" max="30" required>
                         <span class="tooltip">?
-                            <span class="tooltiptext">Measured at the back of the arm.</span>
+                            <span class="tooltiptext">The thickness of skin folds.</span>
                         </span></td>
                 </tr>
                 <tr>
                     <td align = "right">Insulin Level: </td>
-                    <td align = "left"><input type="text" name="n5" placeholder="IU/mL">
+                    <td align = "left"><input type="text" name="n5" placeholder="IU/mL" min="0" max="700" required>
                         <span class="tooltip">?
-                            <span class="tooltiptext">The amount of insulin in the blood.</span>
+                            <span class="tooltiptext">The amount of insulin, a hormone that helps control blood sugar, in the blood.</span>
                         </span></td>
                 </tr>
                 <tr>
                     <td align = "right">Body Mass Index: </td>
-                    <td align = "left"><input type="text" name="n6" placeholder="kg/m">
+                    <td align = "left"><input type="text" name="n6" placeholder="kg/m&#178;" min="0" max="50" required>
                         <span class="tooltip">?
-                            <span class="tooltiptext">A measure of body fat based on weight and height (weight(kg)/height(m)^2).</span>
+                            <span class="tooltiptext">A measure of body fat based on weight and height (weight(kg)/height(m)<sup>2</sup>).</span>
                         </span></td>
                 </tr>
                 <tr>
                     <td align = "right">Diabetes Pedigree Function: </td>
-                    <td align = "left"><input type="text" name="n7" min="0">
+                    <td align = "left"><input type="text" name="n7" min="0" max="3" required>
                         <span class="tooltip">?
-                            <span class="tooltiptext">A score that reflects the genetic predisposition to diabetes, based on the family history of the disease.</span>
+                            <span class="tooltiptext">A score that estimates the likelihood of diabetes based on family history.</span>
                         </span></td>
                 </tr>
                 <tr>
                     <td align = "right">Age: </td>
-                    <td align = "left"><input type="text" name="n8" placeholder="years"></td>
+                    <td align = "left"><input type="text" name="n8" placeholder="years" min="0" max="150" required></td>
                 </tr>
             </table>
             <input type="submit">
