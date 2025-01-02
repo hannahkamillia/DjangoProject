@@ -82,6 +82,7 @@ urlpatterns = [
     path('breast_result/home', views.home),
     path('kidney_result/home', views.home),
     path('diabetes_result/home', views.home),
+    path('heart_result/home', views.home),
 
     # Heart model prediction routes
     path('predict/heart', views.heart_result),  # Updated to 'heart_result'
@@ -90,5 +91,12 @@ urlpatterns = [
     # Breast model prediction routes
     path('predict/breast', views.breast_result),  # Updated to 'breast_result'
     path('menu/breast', views.breast_result),  # Updated to 'breast_result'
+
+    #From result to menu
+    path('breast_result/menu', views.menu),
+    path('heart_result/menu', views.menu),
+    path('kidney_result/menu', views.menu),
+    path('diabetes_result/menu', views.menu),
+
 ]
 

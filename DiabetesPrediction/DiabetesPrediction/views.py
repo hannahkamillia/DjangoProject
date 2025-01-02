@@ -92,6 +92,49 @@ def load_model_and_scaler():
     scaler = joblib.load(scaler_path)
     return model, scaler
 
+
+def load_breast_model_and_scaler():
+    # Define the paths for the model and scaler
+    base_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "static", "diabetespredict", "models"
+    )
+    breast_model_path = os.path.join(base_path, "new_breast_model.pkl")
+    breast_scaler_path = os.path.join(base_path, "new_breast_scaler.pkl")
+
+    # Load the model and scaler
+    new_breast_model = joblib.load(breast_model_path)
+    new_breast_scaler = joblib.load(breast_scaler_path)
+    return new_breast_model, new_breast_scaler
+
+def load_heart_model_and_scaler():
+    base_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), 
+        "static", "diabetespredict", "models"
+    )
+    heart_model_path = os.path.join(base_path, "heart_model.pkl")
+    heart_scaler_path = os.path.join(base_path, "heart_scaler.pkl")
+    
+    # Load model and scaler
+    heart_model = joblib.load(heart_model_path)
+    heart_scaler = joblib.load(heart_scaler_path)
+    return heart_model, heart_scaler
+
+def load_kidney_model_and_scaler():
+    base_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), 
+        "static", "diabetespredict", "models"
+    )
+    kidney_model_path = os.path.join(base_path, "kidney_model.pkl")
+    kidney_scaler_path = os.path.join(base_path, "kidney_scaler.pkl")
+    
+    # Load model and scaler
+    kidney_model = joblib.load(kidney_model_path)
+    kidney_scaler = joblib.load(kidney_scaler_path)
+    return kidney_model, kidney_scaler
+
+
+
 #!Read the data from the diabetes dataset
 def diabetes_result(request):
    # Load the model and scaler
@@ -125,10 +168,11 @@ def diabetes_result(request):
     #!return render(request, "predict.html", {"result2": result1})
 
 #!Heart Model-------------------------------------------------------
+
+
 def heart_result(request):
-     # Load the saved heart disease model and scaler
-    heart_model = joblib.load("static/models/heart_model.pkl")
-    scaler = joblib.load("static/models/breast_scaler.pkl")
+   
+    heart_model, heart_scaler = load_heart_model_and_scaler()
     
     if request.method == 'POST':
         # Get user input from the request using POST
@@ -146,14 +190,14 @@ def heart_result(request):
         val12 = float(request.POST.get('ca', 0))
         val13 = float(request.POST.get('thal', 0))
 
-        # Scale the input values as they need to match the training data scale
-        input_data = scaler.transform([[val1, val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12, val13]])
+         # Scale the input values as they need to match the training data scale
+        input_data = heart_scaler.transform([[val1, val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12, val13]])
 
         # Make a prediction
         pred = heart_model.predict(input_data)
 
         # Decide the outcome and render the appropriate template
-        if pred == [1]:
+        if pred[0] == 1:
             return render(request, "PositiveHeart.html", {"result2": "Positive for Heart Disease"})  
         else:
             return render(request, "NegativeHeart.html", {"result2": "Negative for Heart Disease"})
@@ -162,54 +206,55 @@ def heart_result(request):
     return render(request, 'error.html', {'message': 'Invalid request method.'})
 
 #!BREAST MODEL------------------------------------------
+
 def breast_result(request):
+    # Load the breast model and scaler
+    new_breast_model, new_breast_scaler = load_breast_model_and_scaler()
 
-# Load the saved heart disease model and scaler
-    breast_model = joblib.load("static/models/heart_model.pkl")
-    scaler = joblib.load("static/models/heart_scaler.pkl")
-    
-    
- # Get user input from the request
-    val1 = float(request.GET['avgtum'])
-    val2 = float(request.GET['texture'])
-    val3 = float(request.GET['peri'])
-    val4 = float(request.GET['area'])
-    val5 = float(request.GET['smooth'])
+    # Get input from the user
+    try:
+        val1 = float(request.GET.get('avgtum', 0))
+        val2 = float(request.GET.get('texture', 0))
+        val3 = float(request.GET.get('peri', 0))
+        val4 = float(request.GET.get('area', 0))
+        val5 = float(request.GET.get('smooth', 0))
+    except ValueError:
+        return JsonResponse({"error": "Invalid input. Please enter numeric values only"})
 
-# Scale the input values as they need to match the training data scale
-    input_data = scaler.transform([[val1, val2, val3, val4, val5]])
+    # Scale the input values to match the model's training data
+    input_data = new_breast_scaler.transform([[val1, val2, val3, val4, val5]])
 
-# Make a prediction
-    pred = breast_model.predict(input_data)
+    # Make a prediction
+    pred = new_breast_model.predict(input_data)
 
-# Decide the outcome and render the appropriate template
-    if pred == [1]:
-        return render(request, "malignant.html", {"result2": "Malignant tumor potential"})  
-    else:
-        return render(request, "ResultBenign.html", {"result2": "Negative for Heart Disease"})
+    # Render the appropriate template based on the prediction
+    if pred == [1]:  # Malignant
+        return render(request, "malignant.html", {"result2": "Malignant tumor potential"})
+    else:  # Benign
+        return render(request, "ResultBenign.html", {"result2": "Benign tumor potential"})
 
 #Kidney Logistic Regression
 def kidney_result(request):
    
 # Load the saved heart disease model and scaler
-    kidney_model = joblib.load("static/models/kidney_model.pkl")
-    scaler = joblib.load("static/models/kidney_scaler.pkl")
+   # Load the model and scaler
+    kidney_model, kidney_scaler = load_kidney_model_and_scaler()
     
     
     # Handle user input (make sure the inputs are valid and match the expected format)
     input_data = pd.DataFrame([[int(request.GET['n1']), float(request.GET['n2']), float(request.GET['n3']),
                                 float(request.GET['n4']), float(request.GET['n5']), int(request.GET['n6']),
-                                int(request.GET['n7']), int(request.GET['n8']), int(request.GET['n9']),
+                                float(request.GET['n7']), int(request.GET['n8']), int(request.GET['n9']),
                                 float(request.GET['n10']), float(request.GET['n11']), float(request.GET['n12']),
                                 float(request.GET['n13']), float(request.GET['n14']), float(request.GET['n15']),
                                 float(request.GET['n16']), float(request.GET['n17']), float(request.GET['n18']),
-                                int(request.GET['n19']), int(request.GET['n20']), int(request.GET['n21']),
-                                int(request.GET['n22']), int(request.GET['n23']), int(request.GET['n24'])]],
-                               columns=X.columns)
+                                float(request.GET['n19']), int(request.GET['n20']), int(request.GET['n21']),
+                                int(request.GET['n22']), int(request.GET['n23']), int(request.GET['n24'])]],)
+                               #columns=X.columns)
     
 
     # Scale the user input
-    input_data_scaled = scaler.transform(input_data)
+    input_data_scaled = kidney_scaler.transform(input_data)
 
     # Make the prediction
     pred = kidney_model.predict(input_data_scaled)
