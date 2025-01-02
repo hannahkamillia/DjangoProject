@@ -217,6 +217,20 @@
             margin-bottom: 10px; /* Adds spacing below the image */
         }
 
+        .hidden-content {
+            display: none; /* Hidden by default */
+            margin-top: 10px;
+        }
+
+        .hidden-content.visible {
+            display: block; /* Shown when toggled */
+        }
+        .img-fluid {
+            max-width: 100%; /* Ensure the image scales properly within its container */
+            height: auto;
+            border-radius: 5px; /* Optional: Add rounded corners */
+        }
+
      
 
 
@@ -244,8 +258,23 @@
             subNav.style.display = subNav.style.display === 'block' ? 'none' : 'block';
         }
     }
+    function toggleHiddenContent(contentId, button) {
+    const content = document.getElementById(contentId);
 
-   
+    if (content) {
+        if (content.classList.contains('visible')) {
+            content.classList.remove('visible');
+            button.textContent = "Show More"; // Update button text
+        } else {
+            content.classList.add('visible');
+            button.textContent = "Show Less"; // Update button text
+        }
+    } else {
+        console.error("Element not found: ", contentId);
+    }
+}
+
+
     </script>
 </head>
 <body>
@@ -312,10 +341,19 @@
                                                     <p class="card-text">
                                                         An autoimmune disease where the body's immune system attacks the cells that produce insulin.
                                                     </p>
+                                                    <!-- Hidden Content -->
+                                                    <div id="hidden-content-1" class="hidden-content">
+                                                        <h5>Symptoms</h5>
+                                                        <img src="{% static 'diabetespredict\images\symptom .jpg' %}" alt="Type 1 Symptoms" class="img-fluid">
+                                                    </div>
+                                                    <!-- Show More Button -->
+                                                    <button style=background-color:green class="btn btn-primary btn-sm mt-2" onclick="toggleHiddenContent('hidden-content-1', this)">
+                                                        Show More
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                
+                                    
                                         <!-- Card 2: Type 2 Diabetes -->
                                         <div class="col-md-6">
                                             <div class="card shadow-sm mb-4">
@@ -325,15 +363,25 @@
                                                     <p class="card-text">
                                                         A condition where the body either doesn't produce enough insulin or can't use insulin effectively.
                                                     </p>
+                                                    <!-- Hidden Content -->
+                                                    <div id="hidden-content-2" class="hidden-content">
+                                                        <h5>Symptoms</h5>
+                                                        <img src="{% static 'diabetespredict\images\symptom2.jpg' %}" alt="Type 1 Symptoms" class="img-fluid">
+                                                    </div>
+                                                    <!-- Show More Button -->
+                                                    <button style=background-color:green class="btn btn-primary btn-sm mt-2" onclick="toggleHiddenContent('hidden-content-2', this)">
+                                                        Show More
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    
                                      </div>
                                 </div>
     
                                 <div id="symptoms">
-                                    <h4>Symptoms</h4>
+                                    <h4>What causes the Common Symptoms</h4>
                                     <div class="row">
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
@@ -351,20 +399,20 @@
                                                
                                             </div>
                                         </div> <!-- End Col -->	
-                                        
-                                        <div class="col-sm-6 col-md-3">
-                                            <div class="col-md-12 feature-box card">
-                                                <img class="card-img-top" src="\static\diabetespredict\images\weight loss.png" alt="Diabetes">
-                                                <h4>Weight Loss</h4>
-                                                <p>Weight loss occurs when the body breaks down fat and muscle for energy instead of glucose.</p>
-                                                   
-                                            </div>
-                                        </div><!-- End Col -->
+
                                         <div class="col-sm-6 col-md-3">
                                             <div class="col-md-12 feature-box card">
                                                 <img class="card-img-top" src="\static\diabetespredict\images\fatigue.png" alt="Diabetes">
                                                 <h4>Fatigue</h4>
                                                 <p>A common complaint, fatigue can stem from the body's inability to convert glucose into energy.</p>
+                                            </div>
+                                        </div> <!-- End Col -->
+
+                                        <div class="col-sm-6 col-md-3">
+                                            <div class="col-md-12 feature-box card">
+                                                <img class="card-img-top" src="\static\diabetespredict\images\hypo.jpg" alt="Diabetes">
+                                                <h4>Hypoglycemia</h4>
+                                                <p>Cold sweats, tremors, and dizziness can occur if blood sugar drops too low, often from medication or diet issues.</p>
                                             </div>
                                         </div> <!-- End Col -->
                                         
