@@ -31,6 +31,12 @@ urlpatterns = [
     path('menu/home', views.home),
     path('menu/menu', views.menu),
     path('menu/menu/kidney', views.kidney),
+
+    #Home nav bar link
+    path('kidney/', views.kidney),
+    path('breast/', views.breast),
+    path('heart/', views.heart),
+    path('predict/', views.predict),
     
 
     # Prediction routes
