@@ -104,5 +104,68 @@ urlpatterns = [
     path('kidney_result/menu', views.menu),
     path('diabetes_result/menu', views.menu),
 
+    #From result to predictors
+    path('breast_result/heart', views.heart),
+    path('breast_result/kidney', views.kidney),
+    path('breast_result/predict', views.predict),
+    path('breast_result/breast', views.breast),
+
+    path('heart_result/heart', views.heart),
+     path('heart_result/kidney', views.kidney),
+    path('heart_result/predict', views.predict),
+    path('heart_result/breast', views.breast),
+
+    path('kidney_result/heart', views.heart),
+     path('kidney_result/kidney', views.kidney),
+    path('kidney_result/predict', views.predict),
+    path('kidney_result/breast', views.breast),
+
+    path('diabetes_result/heart', views.heart),
+     path('diabetes_result/kidney', views.kidney),
+    path('diabetes_result/predict', views.predict),
+    path('diabetes_result/breast', views.breast),
+
+    #From result page to another
+    path('kidney_result/heart_result', views.heart_result),
+    path('kidney_result/kidney_result', views.kidney_result),
+    path('kidney_result/diabetes_result', views.diabetes_result),
+    path('kidney_result/breast_result', views.breast_result),
+
+    path('heart_result/heart_result', views.heart_result),
+    path('heart_result/kidney_result', views.kidney_result),
+    path('heart_result/diabetes_result', views.diabetes_result),
+    path('heart_result/breast_result', views.breast_result),
+
+    path('diabetes_result/heart_result', views.heart_result),
+     path('diabetes_result/kidney_result', views.kidney_result),
+    path('diabetes_result/diabetes_result', views.diabetes_result),
+    path('diabetes_result/breast_result', views.breast_result),
+
+    path('breast_result/heart_result', views.heart_result),
+    path('breast_result/kidney_result', views.kidney_result),
+    path('breast_result/diabetes_result', views.diabetes_result),
+    path('breast_result/breast_result', views.breast_result),
+
+    #from result to another treatment
+    path('kidney_result/KidneyTreat', views.KidneyTreat),
+    path('kidney_result/BreastTreat', views.BreastTreat),
+    path('kidney_result/DiabetesTreat', views.DiabetesTreat),
+    path('kidney_result/HeartTreat', views.HeartTreat),
+
+    path('breast_result/KidneyTreat', views.KidneyTreat),
+    path('breast_result/BreastTreat', views.BreastTreat),
+    path('breast_result/DiabetesTreat', views.DiabetesTreat),
+    path('breast_result/HeartTreat', views.HeartTreat),
+
+    path('heart_result/KidneyTreat', views.KidneyTreat),
+    path('heart_result/BreastTreat', views.BreastTreat),
+    path('heart_result/DiabetesTreat', views.DiabetesTreat),
+    path('heart_result/HeartTreat', views.HeartTreat),
+
+    path('diabetes_result/KidneyTreat', views.KidneyTreat),
+    path('diabetes_result/BreastTreat', views.BreastTreat),
+    path('diabetes_result/DiabetesTreat', views.DiabetesTreat),
+    path('diabetes_result/HeartTreat', views.HeartTreat),
+
 ]
 

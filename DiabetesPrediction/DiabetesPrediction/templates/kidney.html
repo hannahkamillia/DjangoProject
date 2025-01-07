@@ -225,10 +225,10 @@ function validateCurrentStep() {
             allValid = false;
             input.style.border = "2px solid red";
             showCustomNotification("Please fill in all required fields!");
-        } else if (input.type === "text" && !/^\d+$/.test(value)) {
+        } else if (input.type === "text" && !/^\d+(\.\d+)?$/.test(value)) {
             allValid = false;
             input.style.border = "2px solid red";
-            showCustomNotification("Please enter a whole number");
+            showCustomNotification("Please enter a valid number");
         } else {
             input.style.border = ""; // Reset border if valid
         }
